@@ -9,3 +9,7 @@ data:
   password: 'StrongPass123!'
 
 # messaging-service: sql
+
+default-assignments:
+  players:
+    - players
