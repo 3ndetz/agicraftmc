@@ -1,0 +1,27 @@
+# Configuration for the Bed Interaction Messages module
+# ----------------------------------------------
+
+# Enable the module
+enabled: true
+
+# Play sound on bed interaction
+play_sound: false
+
+# Sound settings
+sounds:
+  # Sound on successful bed entry
+  success:
+    name: BLOCK_NOTE_BLOCK_PLING
+    volume: 1.0
+    pitch: 1.0
+  # Sound on error (unable to sleep)
+  error:
+    name: BLOCK_NOTE_BLOCK_BASS
+    volume: 1.0
+    pitch: 0.8
+  # Sound on leaving the bed
+  leave:
+    name: BLOCK_NOTE_BLOCK_HARP
+    volume: 1.0
+    pitch: 1.2
+

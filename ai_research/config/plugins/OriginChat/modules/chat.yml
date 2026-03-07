@@ -1,0 +1,43 @@
+# Chat module configuration
+enabled: true
+
+hex-colors: true
+
+mini-message: true
+
+max-message-length: 256
+
+chats:
+  # Global chat (prefix: !)
+  global:
+    prefix: '!'
+    radius: -1
+    format: '<white>\<{player}> {message}</white>'
+    permission-write: ''
+    permission-view: ''
+
+  # Local chat (no prefix)
+  local:
+    prefix: ''
+    radius: 50
+    format: '<white>\<{player}></white> <yellow>{message}</yellow>'
+    permission-write: ''
+    permission-view: ''
+
+  # Admin chat (prefix: #)
+  admin:
+    prefix: '#'
+    radius: -1
+    format: '<dark_red><bold>\<{player}> {message}</bold></dark_red>'
+    permission-write: originchat.chat.admin
+    permission-view: originchat.chat.admin
+
+cooldown:
+  # Base cooldown in seconds for players without specific cooldown permission.
+  # This is NOT a group name.
+  # To override per group/player (e.g. via LuckPerms), grant:
+  # originchat.chat.cooldown.0   - no cooldown
+  # originchat.chat.cooldown.3   - 3 seconds
+  # originchat.chat.cooldown.10  - 10 seconds
+  # The plugin uses the lowest granted value as effective cooldown.
+  default: 3

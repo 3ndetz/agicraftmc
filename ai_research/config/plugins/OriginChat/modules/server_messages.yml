@@ -1,0 +1,52 @@
+# Server messages module configuration
+
+# Enable/disable player join messages
+join_message_enabled: true
+
+# Enable/disable player leave messages
+leave_message_enabled: true
+
+# Fallback templates used when localized messages are missing.
+# You can leave this list empty to disable fallback text.
+join_messages:
+- '&f+ &f{player} &7joined the server'
+
+leave_messages:
+- '&f- &f{player} &7left the server'
+
+# Enable/disable personal welcome messages
+personal_welcome:
+  enabled: true
+  title:
+    enabled: true
+    text: '{animation_welcome_subtitle}'
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  subtitle:
+    enabled: true
+    text: ''
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  text:
+    enabled: false
+    message: ''
+
+# Enable/disable operator messages
+op_message_enabled: true
+
+# Disable vanilla operator messages
+disable_vanilla_op_messages: true
+
+# Enable/disable gamemode change messages
+gamemode_message_enabled: true
+
+# Disable vanilla gamemode messages
+disable_vanilla_gamemode_messages: true
+
+# Enable/disable seed command messages
+seed_message_enabled: true
+
+# Disable vanilla seed messages
+disable_vanilla_seed_messages: true

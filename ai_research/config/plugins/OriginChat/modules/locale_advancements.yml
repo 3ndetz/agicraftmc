@@ -1,0 +1,46 @@
+# Localized advancements module configuration
+
+advancements:
+  # Enable module
+  enabled: true
+  
+  # Disable vanilla advancement messages
+  disable-vanilla-messages: true
+  
+  # Vanilla message settings (overrides disable-vanilla-messages if specified)
+  vanilla:
+    # Show vanilla task advancements
+    show-tasks: false
+    # Show vanilla goal advancements
+    show-goals: false
+    # Show vanilla challenge advancements
+    show-challenges: false
+  
+  # Show regular task advancements
+  show-tasks: true
+  
+  # Show goal advancements
+  show-goals: true
+  
+  # Show challenge advancements
+  show-challenges: true
+  
+  # Default message format
+  default_format: <gray>{player}</gray> <white>has made the advancement</white> <gray>{title}</gray>
+  
+  # Formats for different locales are now in locale files (en.yml, ru.yml, uk.yml)
+  # formats:
+  #   en_us: "<white><white>{player}</white> has made the advancement {title}"
+  #   ru_ru: "<white><white>{player}</white> получил достижение {title}"
+  
+  # Colors for message elements (MiniMessage format)
+  # Colors are now defined directly in the format strings using tags
+  # colors:
+  #   player_name: "<white>"
+  #   title: "<white>"
+  #   goal: "<white>"
+  
+  # Excluded advancements (will not be displayed)
+  excluded:
+  - minecraft:story/root
+  - minecraft:nether/root

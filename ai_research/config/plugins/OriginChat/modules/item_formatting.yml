@@ -1,0 +1,25 @@
+# Configuration for the Item Formatting module
+
+# Enable/disable the module
+enabled: true
+
+# Allow the use of Markdown syntax when renaming items
+# Supported formats:
+# **text** - bold text
+# *text* - italic text
+# ~~text~~ - strikethrough text
+# __text__ - underlined text
+allow_markdown: true
+
+# Allow the use of color codes with the & symbol
+# Example: &fRed text, &fAqua text
+allow_color_codes: true
+
+# Require permission to use formatting
+require_permission: true
+
+# Permission to use item formatting
+permission: originchat.itemformatting.use
+
+# Apply formatting to the item description (lore)
+format_lore: true

@@ -1,0 +1,30 @@
+# Mentions module configuration
+enabled: true
+
+# Symbol to be used for mentions (@player)
+mention_symbol: '@'
+
+# Cooldown between mentions of the same player in seconds (0 - disable)
+cooldown: 30
+
+# Sound notification settings
+sound:
+  enabled: true
+  # Sound name from Bukkit Sound enum
+  # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+  name: ENTITY_EXPERIENCE_ORB_PICKUP
+  volume: 1.0
+  pitch: 1.0
+
+# Title settings
+title:
+  enabled: true
+  # display_mode: title | subtitle | actionbar | both
+  display_mode: both
+  fade_in: 10
+  stay: 70
+  fade_out: 20
+
+# Chat notification settings
+chat_notification:
+  enabled: true

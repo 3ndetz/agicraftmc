@@ -1,0 +1,46 @@
+# Emoji module configuration
+
+# Enable/disable the module
+enabled: true
+# List of emojis to replace
+# Format: textual_emoticon: UTF_character
+emojis:
+  :): ☺
+  :(: ☹
+  :D: 😀
+  ;): 😉
+  <3: ❤
+  o/: 👋
+  xD: 😆
+  ^_^: 😊
+  -_-: 😑
+  :P: 😛
+  :O: 😮
+  B): 😎
+  :'(: 😢
+  :/: 😕
+  :*: 😘
+  ^^: 😄
+  o_O: 😳
+  (y): 👍
+  (n): 👎
+  (clap): 👏
+  (fire): 🔥
+  (star): ⭐
+  (heart): ❤
+  (lightning): ⚡
+  (sun): ☀
+  (moon): 🌙
+  (rain): 🌧
+  (snow): ❄
+  (music): ♫
+  (coffee): ☕
+  (pizza): 🍕
+  (cake): 🍰
+  (beer): 🍺
+  (sword): ⚔
+  (shield): 🛡
+  (bow): 🏹
+  (pickaxe): ⛏
+  (diamond): 💎
+  (gold): 💰

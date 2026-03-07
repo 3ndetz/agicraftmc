@@ -1,0 +1,323 @@
+# English localization for OriginChat
+
+commands:
+  no_permission: '&fYou do not have permission to execute this command!'
+  player_only_command: '&fThis command can only be executed by players.'
+  unknown_command: '&fUnknown command. Use /originchat help for assistance.'
+  plugin_reloaded: '&fOriginChat plugin successfully reloaded!'
+  chat_cleared_by: '&fChat cleared by player &f{player}&f!'
+  chat_cleared_by_console: '&fChat cleared by console!'
+  
+  locale:
+    usage: '&fUsage: /locale <set <locale>|reset>'
+    set:
+      usage: '&fUsage: /locale set <locale>'
+      invalid: '&fInvalid locale! Available locales: {locales}'
+      success: '&fYour language has been set to &f{locale}&f!'
+    reset:
+      success: '&fYour language has been reset to automatic detection!'
+  
+  module:
+    usage: '&fUsage: /originchat module <list|enable|disable|reload> [module_name]'
+    specify_module_enable: '&fSpecify the module name to enable!'
+    specify_module_disable: '&fSpecify the module name to disable!'
+    specify_module_reload: '&fSpecify the module name to reload!'
+    module_enabled: '&fModule ''{module}'' successfully enabled!'
+    module_enable_failed: '&fFailed to enable module ''{module}''!'
+    module_disabled: '&fModule ''{module}'' successfully disabled!'
+    module_disable_failed: '&fFailed to disable module ''{module}''!'
+    module_reloaded: '&fModule ''{module}'' successfully reloaded!'
+    module_reload_failed: '&fFailed to reload module ''{module}''!'
+  
+  help:
+    lines:
+    - '&7===== &fOriginChat &7====='
+    - '&f/originchat help &7- Show help'
+    - '&f/originchat reload &7- Reload plugin'
+    - '&f/originchat module list &7- List modules'
+    - '&f/originchat module enable <name> &7- Enable module'
+    - '&f/originchat module disable <name> &7- Disable module'
+    - '&f/originchat module reload <name> &7- Reload module'
+    - '&7========================='
+  
+  animations:
+    title: === Animation Management Commands ===
+    reload: Reload animations
+    list: Show animation list
+    info: Show animation info
+    preview: Preview all animation frames with formatting
+    no_permission_reload: You do not have permission to reload animations
+    no_permission_list: You do not have permission to view animation list
+    no_permission_info: You do not have permission to view animation info
+    no_permission_preview: You do not have permission to preview animations
+    player_only: This command is only available for players
+    specify_animation: 'Specify animation name: /originchat animation {command} <name>'
+    animation_not_found: Animation '{name}' not found
+    animations_not_found: No animations found
+    animations_list: 'Animation list ({count}):'
+    animation_info: 'Information for animation ''{name}'':'
+    interval: 'Interval: {interval} ticks'
+    frames_count: 'Frames: {count}'
+    current_frame: 'Current frame: {index}'
+    frames_title: 'Frames:'
+    frame_number: 'Frame {number}: '
+    preview_title: 'Preview of animation ''{name}'':'
+    usage_text: 'Usage in text: {placeholder}'
+    all_frames: 'All animation frames:'
+    interval_between: 'Interval between frames: {interval} ticks ({seconds} sec)'
+    total_frames: 'Total frames: {count}'
+    usage_hint: To see the animation in action, use text with placeholder {placeholder}
+    reloaded: Animations successfully reloaded
+  
+  module_list:
+    lines:
+    - '&7===== &fOriginChat Modules &7====='
+    - '&7=========================='
+    module_info: '&f{name} &7({id}) - {status}'
+    module_description: '  &7{description}'
+    status_enabled: '&fEnabled'
+    status_disabled: '&fDisabled'
+
+modules:
+  chat_bubbles:
+    name: Chat Bubbles
+    description: Displays chat messages as holograms over players' heads
+  
+  emoji:
+    name: Emoji Module
+    description: Replaces text emoticons with UTF emoji symbols
+  
+  locale_advancements:
+    name: Localized Advancements
+    description: Module for displaying localized advancement messages
+    format: <gray>{player}</gray> <white>has made the advancement</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_task: <gray>{player}</gray> <white>has made the advancement</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_goal: <gray>{player}</gray> <white>has reached the goal</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_challenge: <gray>{player}</gray> <white>has completed the challenge</white>
+      <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+  
+  scoreboard:
+    name: Scoreboard
+    description: Configures player sidebar (scoreboard)
+    title: '&f&lOriginChat'
+    lines:
+    - '&7Name: &f{player}'
+    - '&7World: &f{world}'
+    - '&7Online: &f{online}/{max_online}'
+    - '&7Health: &f{health}/{max_health}'
+    - '&7Level: &f{level}'
+    - '&7Pos: &f{x}, {y}, {z}'
+  
+  server_messages:
+    name: Server Messages
+    description: Manages player join/leave messages
+    join_messages:
+    - '&f+ &f{player} &7joined the server'
+    - '&fWelcome, &f{player}!'
+    - '&fPlayer &f{player} &fjoined the server'
+    leave_messages:
+    - '&f- &f{player} &7left the server'
+    - '&fPlayer &f{player} &fleft the server'
+    - '&f{player} &7disconnected'
+    op_messages:
+      no_permission: '&fYou do not have permission to use this command.'
+      sender: '&fYou granted operator rights to &f{target}&f!'
+      target: '&fOperator rights granted to you by &f{sender}&f!'
+      broadcast: '&f{sender} &fgranted operator rights to &f{target}&f!'
+    deop_messages:
+      sender: '&fYou removed operator rights from &f{target}&f!'
+      target: '&fYour operator rights were removed by &f{sender}&f!'
+      broadcast: '&f{sender} &fremoved operator rights from &f{target}&f!'
+    seed_messages:
+      no_permission: '&fYou do not have permission to view the world seed.'
+      player: '&fWorld seed: &f{seed}'
+      console: 'World seed: {seed}'
+    gamemode_messages:
+      no_permission_mode: '&fYou do not have access to gamemode &f{gamemode}&f.'
+      no_permission_target: '&fYou can only change your own gamemode.'
+      sender: '&fYou changed gamemode of &f{target}&f to &f{gamemode}&f!'
+      target: '&fYour gamemode was changed to &f{gamemode}&f by &f{sender}&f!'
+      broadcast: '&f{sender} &fchanged gamemode of &f{target}&f to &f{gamemode}&f!'
+      player_not_found: '&fPlayer &f{player}&f not found!'
+      already_in_gamemode: '&fPlayer &f{player}&f is already in &f{gamemode}&f mode!'
+      modes:
+        survival: survival
+        creative: creative
+        adventure: adventure
+        spectator: spectator
+  
+  private_messages:
+    name: Private Messages
+    description: Module for sending private messages between players
+    format:
+      sender: '&7You &f-> &7{receiver}: &f{message}'
+      receiver: '&7{sender} &f-> &7You: &f{message}'
+    messages:
+      not-a-player: '&fThis command is only available for players!'
+      player-not-specified: '&fPlease specify a player name!'
+      message-not-specified: '&fPlease enter a message!'
+      player-not-found: '&fPlayer {player} not found or offline!'
+      cannot-message-yourself: '&fYou cannot message yourself!'
+      no-reply-target: '&fNobody to reply to! Send someone a message first.'
+  
+  locale_deaths:
+    name: Localized Deaths
+    description: Module for displaying localized death messages
+  
+  roleplay:
+    name: Roleplay
+    description: Adds commands and functions for roleplaying
+    format:
+      me: '&f* {player} {message}'
+      do: '&f[ACTION] {player}: {message}'
+      try: '&f[TRY] {player}: {message} ({result})'
+      todo: '&f[TODO] {player}: {message}'
+      ball: '&f[BALL] {player}: {message} — {result}'
+      gme: '&f[GLOBAL] * {player} {message}'
+      gdo: '&f[GLOBAL] [ACTION] {player}: {message}'
+      gtry: '&f[GLOBAL] [TRY] {player}: {message} ({result})'
+      gtodo: '&f[GLOBAL] [TODO] {player}: {message}'
+      gball: '&f[GLOBAL] [BALL] {player}: {message} — {result}'
+      roll: '&f[DICE] {player} rolls {min}-{max}: &f{result}'
+      groll: '&f[GLOBAL] [DICE] {player} rolls {min}-{max}: &f{result}'
+      try_success: '&f[TRY] {player}: {message} (&fsuccess&f)'
+      try_failure: '&f[TRY] {player}: {message} (&ffailure&f)'
+      gtry_success: '&f[GLOBAL] [TRY] {player}: {message} (&fsuccess&f)'
+      gtry_failure: '&f[GLOBAL] [TRY] {player}: {message} (&ffailure&f)'
+    errors:
+      player-not-found: '&fPlayer {player} not found or offline!'
+      cannot-target-yourself: '&fYou cannot use this command on yourself!'
+      not-enough-arguments: '&fNot enough arguments!'
+      not-a-player: '&fThis command is only available for players!'
+      unknown-result: '&fUnknown result!'
+    results:
+    - success
+    - failure
+    - 'yes'
+    - 'no'
+    - maybe
+    - Very likely
+    - Unlikely
+    - Definitely yes
+    - Definitely no
+    - Ask later
+    - Cannot say now
+    - The stars say yes
+    - The stars say no
+    - The future is hazy
+  
+  chat:
+    name: Chat
+    description: Configures chat
+    nobody-heard: '&fNobody heard you!'
+    chat-not-found: '&fChat not found!'
+    cooldown: '&fPlease wait {time}s before your next message!'
+    header:
+    - '&fWelcome to the server!'
+    - '&7Online: {online}/{max_online}'
+    footer:
+    - '&fHave a nice game!'
+  
+  tab:
+    name: Tab List
+    description: Configures player list in tab
+    header:
+    - '&fWelcome to the server!'
+    - '&7Online: {online}/{max_online}'
+    footer:
+    - '&fHave a nice game!'
+    - '&7discord.gg/yourserver'
+  
+  server_brand:
+    name: Server Brand
+    description: Configures displayed server brand in the client
+  
+  mentions:
+    name: Mentions
+    description: Adds player mentions in chat with notifications
+    title: '&fYou were mentioned!'
+    subtitle: '&f{player} mentioned you in chat'
+    chat_message: '&f{player} &7mentioned you in chat'
+    actionbar: '&f{player} &fmentioned you in chat'
+  
+  player_info:
+    name: Player Info
+    description: Shows player information on right-click
+    format: '&7Player: &f{player}'
+  
+  afk:
+    name: AFK Module
+    description: Adds AFK (Away From Keyboard) functionality
+    messages:
+      player_now_afk: '&7{player} &fis now AFK'
+      player_no_longer_afk: '&7{player} &fis no longer AFK'
+  
+  bed_messages:
+    name: Bed Messages
+    description: Customizes messages when players interact with beds
+    messages:
+      bed_enter_success: '&fSpawn point set'
+      bed_enter_not_possible_now: '&fYou can only sleep at night'
+      bed_enter_not_possible_here: '&fYou cannot sleep here'
+      bed_enter_too_far_away: '&fThis bed is too far away'
+      bed_enter_not_safe: '&fYou cannot sleep now; there are monsters nearby'
+      bed_enter_other_problem: '&fYou cannot sleep right now'
+      bed_leave: '&fYou left the bed'
+  
+  book_formatting:
+    name: Book Formatting
+    description: Allows players to use Markdown and color codes in books
+    messages:
+      no_permission: '&fYou do not have permission to format books!'
+  
+  sign_formatting:
+    name: Sign Formatting
+    description: Allows players to use Markdown and color codes on signs
+    messages:
+      no_permission: '&fYou do not have permission to format signs!'
+  
+  item_formatting:
+    name: Item Formatting
+    description: Allows players to use Markdown and color codes when renaming items
+    messages:
+      no_permission: '&fYou do not have permission to format items!'
+
+death_messages:
+  death:
+    attack:
+      player:
+        item: <argument:0> was slain by <argument:1> using <argument:2>
+      mob:
+        item: <argument:0> was slain by <argument:1> using <argument:2>
+      inFire: <argument:0> went up in flames
+      onFire: <argument:0> burned to death
+      lava: <argument:0> tried to swim in lava
+      explosion:
+        player: <argument:0> was blown up by <argument:1>
+      cactus: <argument:0> was pricked to death
+      starve: <argument:0> starved to death
+      cramming: <argument:0> was squished too much
+      lightning: <argument:0> was struck by lightning
+      magic: <argument:0> was killed by magic
+      wither: <argument:0> withered away
+      anvil: <argument:0> was squashed by a falling anvil
+      fallingBlock: <argument:0> was squashed by a falling block
+      flyIntoWall: <argument:0> experienced kinetic energy
+      outOfWorld: <argument:0> fell out of the world
+      genericKill: <argument:0> was killed
+      generic: <argument:0> died
+      sting: <argument:0> was stung to death
+      hotFloor: <argument:0> discovered the floor was lava
+      dragonBreath: <argument:0> was roasted in dragon breath
+      dryout: <argument:0> dried out
+      freeze: <argument:0> froze to death
+      stalagmite: <argument:0> was impaled on a stalagmite
+      sweetBerryBush: <argument:0> was poked to death by a sweet berry bush
+      badRespawnPoint: <argument:0> was killed by [Intentional Game Design]
+    fell:
+      anvil: <argument:0> was squashed by a falling anvil
+      accident: <argument:0> fell from a high place
+      assist: <argument:0> was doomed to fall by <argument:1>
+      finish: <argument:0> fell too far and was finished by <argument:1>
+    drown:
+      assist: <argument:0> drowned whilst trying to escape <argument:1>

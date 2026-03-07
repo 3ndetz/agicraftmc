@@ -1,0 +1,22 @@
+# Configuration for the Sign Formatting module
+
+# Enable/disable the module
+enabled: true
+
+# Allow the use of Markdown syntax on signs
+# Supported formats:
+# **text** - bold text
+# *text* - italic text
+# ~~text~~ - strikethrough text
+# __text__ - underlined text
+allow_markdown: true
+
+# Allow the use of color codes with the & symbol
+# Example: &fRed text, &fAqua text
+allow_color_codes: true
+
+# Require permission to use formatting
+require_permission: true
+
+# Permission to use formatting on signs
+permission: originchat.signformatting.use

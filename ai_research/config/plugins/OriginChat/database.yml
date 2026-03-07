@@ -1,0 +1,97 @@
+# OriginChat Database Configuration
+
+# Database type (sqlite, mysql, postgresql)
+# sqlite - local file-based database (recommended for small servers)
+# mysql - MySQL/MariaDB (recommended for medium and large servers)
+# postgresql - PostgreSQL (recommended for large high-load servers)
+type: sqlite
+
+# SQLite Settings
+sqlite:
+  # Database file name (will be created in the plugin folder)
+  database: originchat
+  # Additional connection parameters
+  options:
+    # Maximum wait time (in seconds)
+    timeout: 30
+    # Automatic table creation
+    auto-create: true
+
+# MySQL/MariaDB Settings
+mysql:
+  # Database server host
+  host: localhost
+  # Database server port
+  port: 3306
+  # Database name
+  database: originchat
+  # Username
+  username: root
+  # User password
+  password: password
+  # Use SSL for connection
+  use-ssl: false
+  # Additional connection parameters
+  options:
+    # Maximum pool size
+    max-pool-size: 10
+    # Connection timeout (in milliseconds)
+    connection-timeout: 30000
+    # Idle timeout (in milliseconds)
+    idle-timeout: 600000
+    # Max lifetime (in milliseconds)
+    max-lifetime: 1800000
+    # Additional connection URL properties
+    properties:
+      useUnicode: true
+      characterEncoding: utf8
+      useSSL: false
+      serverTimezone: UTC
+
+# PostgreSQL Settings
+postgresql:
+  # Database server host
+  host: localhost
+  # Database server port
+  port: 5432
+  # Database name
+  database: originchat
+  # Username
+  username: postgres
+  # User password
+  password: password
+  # Use SSL for connection
+  use-ssl: false
+  # Additional connection parameters
+  options:
+    # Maximum pool size
+    max-pool-size: 10
+    # Connection timeout (in milliseconds)
+    connection-timeout: 30000
+    # Idle timeout (in milliseconds)
+    idle-timeout: 600000
+    # Max lifetime (in milliseconds)
+    max-lifetime: 1800000
+    # Database schema
+    schema: public
+    # Additional connection URL properties
+    properties:
+      ssl: false
+      sslmode: disable
+      ApplicationName: OriginChat
+
+# Database Migration Settings
+migration:
+  # Automatically perform migrations on startup
+  auto-migrate: true
+  # Create backup before migration
+  backup-before-migrate: true
+
+# Caching Settings
+cache:
+  # Enable request caching
+  enabled: true
+  # Cache TTL (in seconds)
+  ttl: 300
+  # Maximum cache size
+  max-size: 1000

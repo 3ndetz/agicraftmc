@@ -1,0 +1,15 @@
+# Localized death messages module configuration
+
+death_messages:
+  # Enable module
+  enabled: true
+  
+  # Disable vanilla death messages
+  disable-vanilla-messages: true
+  
+  # Play sound on player death
+  play_sound: true
+  
+  # Sound to play on player death
+  # List of available sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+  death_sound: ENTITY_CAT_DEATH

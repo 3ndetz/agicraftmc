@@ -1,0 +1,104 @@
+# Configuration for the Automatic Messages module
+
+# Enable/disable the module
+enabled: true
+# Message settings
+messages:
+  # Example of a simple chat message
+  welcome:
+    type: chat
+    interval: 30
+    random: false
+    message: '&fWelcome to the server! Enjoy your stay!'
+  
+  # Example of a message with multiple options
+  tips:
+    type: chat
+    interval: 60
+    random: true
+    message:
+      tip1:
+        ru_ru:
+        - '&fСовет: &7Используйте команду &f/help &7для получения списка команд.'
+        en_us:
+        - '&fTip: &7Use the &f/help &7command to get a list of commands.'
+        uk_ua:
+        - '&fПорада: &7Використовуйте команду &f/help &7для отримання списку команд.'
+        de_de:
+        - '&fTipp: &7Benutze den Befehl &f/help &7um eine Liste der Befehle zu erhalten.'
+      tip2:
+        ru_ru:
+        - '&fСовет: &7Попробуйте использовать команду &f/weather &7для изменения погоды.'
+        en_us:
+        - '&fTip: &7Try using the &f/weather &7command to change the weather.'
+        uk_ua:
+        - '&fПорада: &7Спробуйте використати команду &f/weather &7для зміни погоди.'
+        de_de:
+        - '&fTipp: &7Versuche den Befehl &f/weather &7um das Wetter zu ändern.'
+  
+  # Example of a localized message
+  greeting:
+    type: chat
+    interval: 900
+    random: false
+    message:
+      ru_ru:
+      - '&fПривет! &7Как дела? Хорошей игры!'
+      - '&fДобро пожаловать! &7Надеемся, вам нравится на нашем сервере.'
+      en_us:
+      - '&fHello! &7How are you? Have a good game!'
+      - '&fWelcome! &7We hope you''re enjoying our server.'
+      uk_ua:
+      - '&fПривіт! &7Як справи? Приємної гри!'
+      - '&fЛаскаво просимо! &7Сподіваємося, вам подобається на нашому сервері.'
+      de_de:
+      - '&fHallo! &7Wie geht''s? Viel Spaß beim Spiel!'
+      - '&fWillkommen! &7Wir hoffen, dir gefällt unser Server.'
+  
+  # Example of an action bar message
+  actionbar_message:
+    type: actionbar
+    interval: 180
+    random: true
+    message:
+      ru_ru:
+      - '&fНе забудьте посетить наш сайт!'
+      - '&fИспользуйте команду &f/help &fдля получения помощи.'
+      en_us:
+      - '&fDon''t forget to visit our website!'
+      - '&fUse &f/help &fcommand to get assistance.'
+      uk_ua:
+      - '&fНе забудьте відвідати наш сайт!'
+      - '&fВикористовуйте команду &f/help &fдля отримання допомоги.'
+      de_de:
+      - '&fVergiss nicht unsere Webseite zu besuchen!'
+      - '&fBenutze den Befehl &f/help &fum Hilfe zu erhalten.'
+  
+  # Example of a title message
+  title_message:
+    type: title
+    interval: 1200
+    random: false
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+    message:
+      ru_ru: '&f&lВажное сообщение!'
+      en_us: '&f&lImportant message!'
+      uk_ua: '&f&lВажливе повідомлення!'
+      de_de: '&f&lWichtige Nachricht!'
+  
+  # Example of a subtitle message
+  subtitle_message:
+    type: subtitle
+    interval: 1200
+    random: false
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+    title: '&f&lAttention!'
+    message:
+      ru_ru: '&fНе забудьте проголосовать за наш сервер!'
+      en_us: '&fDon''t forget to vote for our server!'
+      uk_ua: '&fНе забудьте проголосувати за наш сервер!'
+      de_de: '&fVergiss nicht für unseren Server zu voten!'

@@ -1,0 +1,122 @@
+# OriginChat Animations Configuration
+# Unlocalized format:
+# animation_name:
+#   interval: interval_in_ticks (20 ticks = 1 second)
+#   frames:
+#     - frame1
+#     - frame2
+#     - etc.
+#
+# Localized format:
+# animation_name:
+#   interval: interval_in_ticks (20 ticks = 1 second)
+#   frames:
+#     ru_ru: # language code
+#       - frame1 in Russian
+#       - frame2 in Russian
+#     en_us: # language code
+#       - frame1 in English
+#       - frame2 in English
+
+# Example of a rainbow animation
+rainbow:
+  interval: 5
+  frames:
+  - '&fР&fа&fд&fу&fг&fа'
+  - '&fР&fа&fд&fу&fг&fа'
+  - '&fР&fа&fд&fу&fг&fа'
+  - '&fР&fа&fд&fу&fг&fа'
+  - '&fР&fа&fд&fу&fг&fа'
+  - '&fР&fа&fд&fу&fг&fа'
+
+# Example of a blinking text with localization
+blink:
+  interval: 10
+  frames:
+    ru_ru:
+    - '&f&lВНИМАНИЕ!'
+    - '&f&lВНИМАНИЕ!'
+    - '&f&lВНИМАНИЕ!'
+    - '&f&lВНИМАНИЕ!'
+    uk_ua:
+    - '&f&lУВАГА!'
+    - '&f&lУВАГА!'
+    - '&f&lУВАГА!'
+    - '&f&lУВАГА!'
+    en_us:
+    - '&f&lWARNING!'
+    - '&f&lWARNING!'
+    - '&f&lWARNING!'
+    - '&f&lWARNING!'
+    de_de:
+    - '&f&lACHTUNG!'
+    - '&f&lACHTUNG!'
+    - '&f&lACHTUNG!'
+    - '&f&lACHTUNG!'
+
+# Example of an animation with player placeholder and localization
+welcome:
+  interval: 15
+  frames:
+    ru_ru:
+    - '&fДобро пожаловать, &f{player}!'
+    - '&fДобро пожаловать, &f{player}!'
+    - '&fДобро пожаловать, &f{player}!'
+    - '&fДобро пожаловать, &f{player}!'
+    - '&fДобро пожаловать, &f{player}!'
+    uk_ua:
+    - '&fЛаскаво просимо, &f{player}!'
+    - '&fЛаскаво просимо, &f{player}!'
+    - '&fЛаскаво просимо, &f{player}!'
+    - '&fЛаскаво просимо, &f{player}!'
+    - '&fЛаскаво просимо, &f{player}!'
+    en_us:
+    - '&fWelcome, &f{player}!'
+    - '&fWelcome, &f{player}!'
+    - '&fWelcome, &f{player}!'
+    - '&fWelcome, &f{player}!'
+    - '&fWelcome, &f{player}!'
+    de_de:
+    - '&fWillkommen, &f{player}!'
+    - '&fWillkommen, &f{player}!'
+    - '&fWillkommen, &f{player}!'
+    - '&fWillkommen, &f{player}!'
+    - '&fWillkommen, &f{player}!'
+
+# Loading animation example
+loading:
+  interval: 5
+  frames:
+  - '&7[&f█&7□□□□□□□□□] &f10%'
+  - '&7[&f██&7□□□□□□□□] &f20%'
+  - '&7[&f███&7□□□□□□□] &f30%'
+  - '&7[&f████&7□□□□□□] &f40%'
+  - '&7[&f█████&7□□□□□] &f50%'
+  - '&7[&f██████&7□□□□] &f60%'
+  - '&7[&f███████&7□□□] &f70%'
+  - '&7[&f████████&7□□] &f80%'
+  - '&7[&f█████████&7□] &f90%'
+  - '&7[&f██████████] &f100%'
+
+# Animation for welcome title (OriginChat)
+welcome_title:
+  interval: 2
+  frames:
+  - '   '
+  - ' <gray><bold>O</bold></gray> '
+  - ' <gray><bold>Ori</bold></gray> '
+  - ' <white><bold>Origin</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>OriginChat</bold></white> '
+  - ' <white><bold>Origin</bold></white> '
+  - ' <gray><bold>Ori</bold></gray> '
+  - ' <gray><bold>O</bold></gray> '
+  - '   '
+
+# Animation for welcome subtitle (Welcome)

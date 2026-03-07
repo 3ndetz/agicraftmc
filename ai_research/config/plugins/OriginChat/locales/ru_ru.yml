@@ -1,0 +1,328 @@
+# Русская локализация OriginChat
+
+commands:
+  no_permission: '&fУ вас нет прав для выполнения этой команды!'
+  player_only_command: '&fЭту команду могут выполнять только игроки.'
+  unknown_command: '&fНеизвестная команда. Используйте /originchat help для справки.'
+  plugin_reloaded: '&fПлагин OriginChat успешно перезагружен!'
+  chat_cleared_by: '&fЧат был очищен игроком &f{player}&f!'
+  chat_cleared_by_console: '&fЧат был очищен консолью!'
+  
+  locale:
+    usage: '&fИспользование: /locale <set <locale>|reset>'
+    set:
+      usage: '&fИспользование: /locale set <locale>'
+      invalid: '&fНеверная локаль! Доступные локали: {locales}'
+      success: '&fЯзык установлен на &f{locale}&f!'
+    reset:
+      success: '&fЯзык сброшен на автоматическое определение!'
+  
+  module:
+    usage: '&fИспользование: /originchat module <list|enable|disable|reload> [имя_модуля]'
+    specify_module_enable: '&fУкажите имя модуля для включения!'
+    specify_module_disable: '&fУкажите имя модуля для выключения!'
+    specify_module_reload: '&fУкажите имя модуля для перезагрузки!'
+    module_enabled: '&fМодуль ''{module}'' успешно включен!'
+    module_enable_failed: '&fНе удалось включить модуль ''{module}''!'
+    module_disabled: '&fМодуль ''{module}'' успешно выключен!'
+    module_disable_failed: '&fНе удалось выключить модуль ''{module}''!'
+    module_reloaded: '&fМодуль ''{module}'' успешно перезагружен!'
+    module_reload_failed: '&fНе удалось перезагрузить модуль ''{module}''!'
+  
+  help:
+    lines:
+    - '&7===== &fOriginChat &7====='
+    - '&f/originchat help &7- Показать справку'
+    - '&f/originchat reload &7- Перезагрузить плагин'
+    - '&f/originchat module list &7- Список модулей'
+    - '&f/originchat module enable <имя> &7- Включить модуль'
+    - '&f/originchat module disable <имя> &7- Выключить модуль'
+    - '&f/originchat module reload <имя> &7- Перезагрузить модуль'
+    - '&7========================='
+  
+  animations:
+    title: === Команды управления анимациями ===
+    reload: Перезагрузить анимации
+    list: Показать список анимаций
+    info: Показать информацию об анимации
+    preview: Показать все кадры анимации с форматированием
+    no_permission_reload: У вас нет прав для перезагрузки анимаций
+    no_permission_list: У вас нет прав для просмотра списка анимаций
+    no_permission_info: У вас нет прав для просмотра информации об анимации
+    no_permission_preview: У вас нет прав для предпросмотра анимаций
+    player_only: Эта команда доступна только для игроков
+    specify_animation: 'Укажите имя анимации: /originchat animation {command} <имя>'
+    animation_not_found: Анимация '{name}' не найдена
+    animations_not_found: Анимации не найдены
+    animations_list: 'Список анимаций ({count}):'
+    animation_info: 'Информация об анимации ''{name}'':'
+    interval: 'Интервал: {interval} тиков'
+    frames_count: 'Кадров: {count}'
+    current_frame: 'Текущий кадр: {index}'
+    frames_title: 'Кадры:'
+    frame_number: 'Кадр {number}: '
+    preview_title: 'Предпросмотр анимации ''{name}'':'
+    usage_text: 'Использование в тексте: {placeholder}'
+    all_frames: 'Все кадры анимации:'
+    interval_between: 'Интервал между кадрами: {interval} тиков ({seconds} сек)'
+    total_frames: 'Всего кадров: {count}'
+    usage_hint: Для просмотра анимации в действии используйте текст с плейсхолдером {placeholder}
+    reloaded: Анимации успешно перезагружены
+  
+  module_list:
+    lines:
+    - '&7===== &fМодули OriginChat &7====='
+    - '&7=========================='
+    module_info: '&f{name} &7({id}) - {status}'
+    module_description: '  &7{description}'
+    status_enabled: '&fВключен'
+    status_disabled: '&fВыключен'
+
+modules:
+  chat_bubbles:
+    name: Чат-баблы
+    description: Отображает сообщения чата в виде голограмм над головами игроков
+  
+  emoji:
+    name: Модуль эмодзи
+    description: Заменяет текстовые смайлики на UTF символы эмодзи
+  
+  locale_advancements:
+    name: Локализованные достижения
+    description: Модуль для отображения локализованных сообщений о достижениях
+    format: <gray>{player}</gray> <white>получил достижение</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_task: <gray>{player}</gray> <white>получил достижение</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_goal: <gray>{player}</gray> <white>достиг цели</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+    format_challenge: <gray>{player}</gray> <white>выполнил испытание</white> <hover:show_text:'<gray>{hover}</gray>'><gray>{title}</gray></hover>
+  
+  scoreboard:
+    name: Скорборд
+    description: Настраивает боковую панель игрока (скорборд)
+    title: '&f&lOriginChat'
+    lines:
+    - '&7Имя: &f{player}'
+    - '&7Мир: &f{world}'
+    - '&7Онлайн: &f{online}/{max_online}'
+    - '&7Здоровье: &f{health}/{max_health}'
+    - '&7Уровень: &f{level}'
+    - '&7Позиция: &f{x}, {y}, {z}'
+  
+  server_messages:
+    name: Серверные сообщения
+    description: Управление сообщениями входа/выхода игроков
+    join_messages:
+    - '&f+ &f{player} &7присоединился к серверу'
+    - '&fДобро пожаловать, &f{player}!'
+    - '&fИгрок &f{player} &fзашел на сервер'
+    leave_messages:
+    - '&f- &f{player} &7покинув сервер'
+    - '&fИгрок &f{player} &fпокинул сервер'
+    - '&f{player} &7отключился'
+    op_messages:
+      no_permission: '&fУ вас нет прав для использования этой команды.'
+      sender: '&fВы выдали права оператора игроку &f{target}&f!'
+      target: '&fВам выданы права оператора игроком &f{sender}&f!'
+      broadcast: '&f{sender} &fвыдал права оператора игроку &f{target}&f!'
+    deop_messages:
+      sender: '&fВы сняли права оператора с игрока &f{target}&f!'
+      target: '&fВаши права оператора были сняты игроком &f{sender}&f!'
+      broadcast: '&f{sender} &fснял права оператора с игрока &f{target}&f!'
+    seed_messages:
+      no_permission: '&fУ вас нет прав на просмотр ключа мира.'
+      player: '&7[&fOriginChat&7] &fКлюч генерации мира: <click:copy_to_clipboard:"{seed}"><hover:show_text:"<gray>Нажми,
+        чтобы скопировать сид</gray>"><white>{seed}</white></hover></click>'
+      console: 'Ключ генерации мира: {seed}'
+    gamemode_messages:
+      no_permission_mode: '&fРежим &f{gamemode}&f вам недоступен.'
+      no_permission_target: '&fВы можете менять только свой режим игры.'
+      sender: '&fВы изменили режим игры игрока &f{target}&f на &f{gamemode}&f!'
+      target: '&fВаш режим игры был изменен на &f{gamemode}&f игроком &f{sender}&f!'
+      broadcast: '&f{sender} &fизменил режим игры игрока &f{target}&f на &f{gamemode}&f!'
+      player_not_found: '&fИгрок &f{player}&f не найден!'
+      already_in_gamemode: '&fИгрок &f{player}&f уже находится в режиме &f{gamemode}&f!'
+      modes:
+        survival: выживание
+        creative: творческий
+        adventure: приключение
+        spectator: наблюдатель
+  
+  private_messages:
+    name: Приватные сообщения
+    description: Модуль для отправки личных сообщений между игроками
+    format:
+      sender: '&7Вы &f-> &7{receiver}: &f{message}'
+      receiver: '&7{sender} &f-> &7Вам: &f{message}'
+    messages:
+      not-a-player: '&fЭта команда доступна только для игроков!'
+      player-not-specified: '&fПожалуйста, укажите имя игрока!'
+      message-not-specified: '&fПожалуйста, введите сообщение!'
+      player-not-found: '&fИгрок {player} не найден или не в сети!'
+      cannot-message-yourself: '&fВы не можете отправить сообщение самому себе!'
+      no-reply-target: '&fНекому ответить! Сначала отправьте кому-нибудь сообщение.'
+  
+  locale_deaths:
+    name: Локализованные смерти
+    description: Модуль для отображения локализованных сообщений о смерти
+  
+  roleplay:
+    name: Ролевая игра
+    description: Добавляет команды и функции для ролевой игры
+    format:
+      # Локальные форматы ролевой игры
+      me: '&f* {player} {message}'
+      do: '&f[ДЕЙСТВИЕ] {player}: {message}'
+      try: '&f[ПРОБА] {player}: {message} ({result})'
+      todo: '&f[ЗАДАЧА] {player}: {message}'
+      ball: '&f[ШАР] {player}: {message} — {result}'
+      # Глобальные форматы ролевой игры
+      gme: '&f[ГЛОБАЛЬНО] * {player} {message}'
+      gdo: '&f[ГЛОБАЛЬНО] [ДЕЙСТВИЕ] {player}: {message}'
+      gtry: '&f[ГЛОБАЛЬНО] [ПРОБА] {player}: {message} ({result})'
+      gtodo: '&f[ГЛОБАЛЬНО] [ЗАДАЧА] {player}: {message}'
+      gball: '&f[ГЛОБАЛЬНО] [ШАР] {player}: {message} — {result}'
+      # Форматы команды roll
+      roll: '&f[КОСТИ] {player} бросает {min}-{max}: &f{result}'
+      groll: '&f[ГЛОБАЛЬНО] [КОСТИ] {player} бросает {min}-{max}: &f{result}'
+      # Результаты команды try
+      try_success: '&f[ПРОБА] {player}: {message} (&fуспех&f)'
+      try_failure: '&f[ПРОБА] {player}: {message} (&fнеудача&f)'
+      gtry_success: '&f[ГЛОБАЛЬНО] [ПРОБА] {player}: {message} (&fуспех&f)'
+      gtry_failure: '&f[ГЛОБАЛЬНО] [ПРОБА] {player}: {message} (&fнеудача&f)'
+    errors:
+      player-not-found: '&fИгрок {player} не найден или не в сети!'
+      cannot-target-yourself: '&fВы не можете использовать эту команду на себе!'
+      not-enough-arguments: '&fНедостаточно аргументов!'
+      not-a-player: '&fЭта команда доступна только для игроков!'
+      unknown-result: '&fНеизвестный результат!'
+    results:
+    - успех
+    - неудача
+    - да
+    - нет
+    - может быть
+    - Весьма вероятно
+    - Маловероятно
+    - Определенно да
+    - Определенно нет
+    - Спроси позже
+    - Не могу сейчас сказать
+    - Звезды говорят да
+    - Звезды говорят нет
+    - Будущее туманно
+  
+  chat:
+    name: Чат
+    description: Настраивает чат
+    nobody-heard: '&fВас никто не услышал!'
+    chat-not-found: '&fЧат не найден!'
+    cooldown: '&fПодождите {time} сек. перед следующим сообщением!'
+    header:
+    - '&fДобро пожаловать на сервер!'
+    - '&7Онлайн: {online}/{max_online}'
+    footer:
+    - '&fПриятной игры!'
+  
+  tab:
+    name: Таб-лист
+    description: Настраивает список игроков в табе
+    header:
+    - '&fДобро пожаловать на сервер!'
+    - '&7Онлайн: {online}/{max_online}'
+    footer:
+    - '&fПриятной игры!'
+    - '&7discord.gg/yourserver'
+  
+  server_brand:
+    name: Бренд сервера
+    description: Настраивает отображаемый бренд сервера в клиенте
+  
+  mentions:
+    name: Упоминания
+    description: Добавляет упоминания игроков в чате с уведомлениями
+    title: '&fВас упомянули!'
+    subtitle: '&f{player} упомянул вас в чате'
+    chat_message: '&f{player} &7упомянул вас в чате'
+    actionbar: '&f{player} &fупомянул вас в чате'
+  
+  player_info:
+    name: Информация об игроке
+    description: Показывает информацию об игроке при нажатии ПКМ
+    format: '&7Игрок: &f{player}'
+  
+  afk:
+    name: Модуль AFK
+    description: Добавляет функциональность AFK (отошёл от клавиатуры)
+    messages:
+      player_now_afk: '&7{player} &fтеперь AFK'
+      player_no_longer_afk: '&7{player} &fбольше не AFK'
+  
+  bed_messages:
+    name: Сообщения кровати
+    description: Настраивает сообщения при взаимодействии игроков с кроватями
+    messages:
+      bed_enter_success: '&fТочка возрождения установлена'
+      bed_enter_not_possible_now: '&fСпать можно только ночью'
+      bed_enter_not_possible_here: '&fВы не можете спать здесь'
+      bed_enter_too_far_away: '&fЭта кровать слишком далеко'
+      bed_enter_not_safe: '&fВы не можете уснуть, пока рядом есть монстры'
+      bed_enter_other_problem: '&fВы не можете спать сейчас'
+      bed_leave: '&fВы встали с кровати'
+  
+  book_formatting:
+    name: Форматирование книг
+    description: Позволяет игрокам использовать Markdown и цветовые коды в книгах
+    messages:
+      no_permission: '&fУ вас нет прав для форматирования книг!'
+  
+  sign_formatting:
+    name: Форматирование табличек
+    description: Позволяет игрокам использовать Markdown и цветовые коды на табличках
+    messages:
+      no_permission: '&fУ вас нет прав для форматирования табличек!'
+  
+  item_formatting:
+    name: Форматирование предметов
+    description: Позволяет игрокам использовать Markdown и цветовые коды при переименовании
+      предметов
+    messages:
+      no_permission: '&fУ вас нет прав для форматирования предметов!'
+
+death_messages:
+  death:
+    attack:
+      player:
+        item: <argument:0> получил по щщам от <argument:1> с помощью <argument:2>
+      mob:
+        item: <argument:0> был убит <argument:1> использующим <argument:2>
+      inFire: <argument:0> познал что такое шашлык
+      onFire: <argument:0> догорел до конца
+      lava: <argument:0> решил искупаться в лаве
+      explosion:
+        player: <argument:0> был разобран на запчасти игроком <argument:1>
+      cactus: <argument:0> обнял кактус
+      starve: <argument:0> забыл что надо есть
+      cramming: <argument:0> был раздавлен толпой
+      lightning: <argument:0> поймал молнию
+      magic: <argument:0> стал жертвой магии
+      wither: <argument:0> иссох
+      anvil: <argument:0> поймал наковальню головой
+      fallingBlock: <argument:0> не посмотрел наверх
+      flyIntoWall: <argument:0> слишком быстро летел
+      outOfWorld: <argument:0> вышел за границы мира
+      genericKill: <argument:0> умер
+      generic: <argument:0> умер по неизвестной причине
+      sting: <argument:0> был ужален
+      hotFloor: <argument:0> забыл что магма горячая
+      dragonBreath: <argument:0> попал под огонь дракона
+      dryout: <argument:0> высох
+      freeze: <argument:0> превратился в ледышку
+      stalagmite: <argument:0> напоролся на сталагмит
+      sweetBerryBush: <argument:0> застрял в кустах ягод
+      badRespawnPoint: <argument:0> взорвался при попытке возродиться
+    fell:
+      anvil: <argument:0> был расплющен в лепёшку упавшей наковальней
+      accident: <argument:0> неудачно познакомился с гравитацией
+      assist: <argument:0> упал благодаря стараниям <argument:1>
+      finish: <argument:0> уже падал, но <argument:1> добил его
+    drown:
+      assist: <argument:0> утонул, и <argument:1> в этом помог

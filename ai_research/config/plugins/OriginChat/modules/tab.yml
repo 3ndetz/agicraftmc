@@ -1,0 +1,21 @@
+# Tab module configuration
+
+# Enable/disable the module
+enabled: true
+
+# Show player ping in the tab list
+show_ping: false
+
+# Player format in the tab list
+# Supported placeholders: %luckperms_prefix%, {player}
+player_format: '%luckperms_prefix%&f{player}'
+
+# Priority sorting type (luckperms or group)
+priority_sorting_type: luckperms
+# Group priorities for sorting in the tab list
+group_priorities:
+  owner: 100
+  admin: 90
+  moderator: 80
+  vip: 50
+  player: 10
