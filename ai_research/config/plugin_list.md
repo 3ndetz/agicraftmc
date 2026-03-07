@@ -14,6 +14,7 @@ For server AI_RESEARCH
 Utility:
 
 - [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)-2.12.2 [NEW]
+  - После установки luckperms прописать `/papi ecloud download LuckPerms`
 
 
 Administration:
