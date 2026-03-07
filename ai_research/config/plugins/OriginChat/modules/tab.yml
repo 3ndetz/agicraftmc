@@ -1,7 +1,7 @@
 # Tab module configuration
 
 # Enable/disable the module
-enabled: true
+enabled: false
 
 # Show player ping in the tab list
 show_ping: false

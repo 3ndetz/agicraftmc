@@ -16,7 +16,7 @@ leave_messages:
 
 # Enable/disable personal welcome messages
 personal_welcome:
-  enabled: true
+  enabled: false
   title:
     enabled: true
     text: '{animation_welcome_subtitle}'

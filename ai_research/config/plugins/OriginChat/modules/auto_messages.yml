@@ -1,7 +1,7 @@
 # Configuration for the Automatic Messages module
 
 # Enable/disable the module
-enabled: true
+enabled: false
 # Message settings
 messages:
   # Example of a simple chat message

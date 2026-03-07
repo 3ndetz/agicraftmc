@@ -1,7 +1,7 @@
 # Scoreboard module configuration
 
 # Enable/disable the module
-enabled: true
+enabled: false
 
 # Scoreboard update interval in ticks (20 ticks = 1 second)
 update_interval: 20
