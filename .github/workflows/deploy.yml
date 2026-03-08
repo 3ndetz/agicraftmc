@@ -4,64 +4,135 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Позволяет запустить вручную из интерфейса GitHub
+  workflow_dispatch:
 
 jobs:
   deploy:
     name: Deploy to Server
     runs-on: self-hosted
+    # PROD_DIR: set via GitHub secret (Settings → Secrets), falls back to default Windows path
+    env:
+      PROD_DIR: ${{ secrets.PROD_DIR || '/d/Repos/NettyanMC' }}
     if: "github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]')"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # needed to diff HEAD^ HEAD
 
-      - name: Deploy to server
-        shell: powershell
+      - name: Detect changed services
+        id: changes
+        shell: bash
         run: |
-          Write-Host "======================================" -ForegroundColor Cyan
-          Write-Host "Starting deployment..." -ForegroundColor Cyan
-          Write-Host "======================================" -ForegroundColor Cyan
+          echo "======================================"
+          echo "Detecting changed services..."
+          echo "======================================"
 
-          Write-Host "Code checked out to: $(Get-Location)"
-          Write-Host "Current commit: $(git log --oneline -1)"
+          # workflow_dispatch = manual trigger, restart everything
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual trigger — restarting all services"
+            echo "restart=all" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
-          # Copy files to production directory (preserve existing data volumes)
-          Write-Host "Syncing files to D:\Repos\NettyanMC..."
-          Copy-Item -Path ".\gobetween.toml" -Destination "D:\Repos\NettyanMC\" -Force
-          Copy-Item -Path ".\docker-compose.yml" -Destination "D:\Repos\NettyanMC\" -Force
-          Copy-Item -Path ".\.github" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\velocity" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\survival" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\lobby" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\limbo" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\ai_research" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\backend" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\frontend" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
-          Copy-Item -Path ".\survival_plus" -Destination "D:\Repos\NettyanMC\" -Recurse -Force
+          CHANGED=$(git diff HEAD^ HEAD --name-only 2>/dev/null || echo "all")
+          echo "Changed files:"
+          echo "$CHANGED"
 
-          # Switch to production directory
-          Set-Location D:\Repos\NettyanMC
-          Write-Host "Working in: $(Get-Location)"
+          # Full restart if docker-compose or shared plugins changed
+          if echo "$CHANGED" | grep -qE "^docker-compose\.yml|^plugins-common/"; then
+            echo "Core files changed — restarting all services"
+            echo "restart=all" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
-          Write-Host "--------------------------------------" -ForegroundColor Yellow
-          Write-Host "Deploying services (files already updated via git on server)..."
-          Write-Host "Rebuilding frontend and backend without cache..."
-          docker compose build --no-cache frontend backend
-          Write-Host "Rebuilding other services with cache..."
-          docker compose build
-          Write-Host "Restarting all services..."
-          docker compose up -d --remove-orphans
-          Write-Host "--------------------------------------" -ForegroundColor Yellow
+          RESTART=""
+          BUILD=""
 
-          Write-Host "Checking service status..."
+          echo "$CHANGED" | grep -q "^ai_research/"   && RESTART="$RESTART airesearch"
+          echo "$CHANGED" | grep -q "^velocity/"       && RESTART="$RESTART velocity"
+          echo "$CHANGED" | grep -q "^lobby/"          && RESTART="$RESTART lobby"
+          echo "$CHANGED" | grep -q "^limbo/"          && RESTART="$RESTART limbo"
+          echo "$CHANGED" | grep -q "^survival/"       && RESTART="$RESTART survival survivalplus"
+          echo "$CHANGED" | grep -q "^survival_plus/"  && RESTART="$RESTART survivalplus"
+          if echo "$CHANGED" | grep -q "^backend/"; then
+            RESTART="$RESTART backend"
+            BUILD="$BUILD backend"
+          fi
+          if echo "$CHANGED" | grep -q "^frontend/"; then
+            RESTART="$RESTART frontend"
+            BUILD="$BUILD frontend"
+          fi
+
+          echo "restart=$RESTART" >> $GITHUB_OUTPUT
+          echo "build=$BUILD" >> $GITHUB_OUTPUT
+          echo "Services to restart: '$RESTART'"
+          echo "Services to build:   '$BUILD'"
+
+      - name: Sync files to production
+        shell: bash
+        run: |
+          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          echo "======================================"
+          echo "Syncing to: $PROD_DIR"
+          echo "======================================"
+
+          mkdir -p "$PROD_DIR"
+
+          for item in gobetween.toml docker-compose.yml .github \
+                      velocity survival lobby limbo ai_research \
+                      backend frontend survival_plus plugins-common; do
+            if [ -e "$item" ]; then
+              cp -rf "$item" "$PROD_DIR/"
+              echo "  synced: $item"
+            fi
+          done
+
+      - name: Build services
+        shell: bash
+        run: |
+          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          cd "$PROD_DIR"
+
+          BUILD="${{ steps.changes.outputs.build }}"
+          RESTART="${{ steps.changes.outputs.restart }}"
+
+          # Build images for services that need it
+          if [ "$RESTART" = "all" ]; then
+            echo "Building all services..."
+            docker compose build --no-cache frontend backend
+            docker compose build
+          elif [ -n "$BUILD" ]; then
+            echo "Building:$BUILD"
+            docker compose build --no-cache $BUILD
+          else
+            echo "No builds needed"
+          fi
+
+      - name: Restart services
+        shell: bash
+        run: |
+          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          cd "$PROD_DIR"
+
+          RESTART="${{ steps.changes.outputs.restart }}"
+
+          if [ "$RESTART" = "all" ]; then
+            echo "Full restart..."
+            docker compose up -d --remove-orphans
+          elif [ -n "$RESTART" ]; then
+            echo "Restarting:$RESTART"
+            docker compose up -d --remove-orphans $RESTART
+          else
+            echo "No services need restart"
+          fi
+
+          echo "======================================"
           docker compose ps
-
-          Write-Host "======================================" -ForegroundColor Cyan
-          Write-Host "Deployment completed successfully!" -ForegroundColor Green
-          Write-Host "======================================" -ForegroundColor Cyan
+          echo "======================================"
 
       - name: Notify on failure
         if: failure()
-        shell: powershell
-        run: |
-          Write-Host "❌ Deployment failed! Check the logs above for details."
+        shell: bash
+        run: echo "Deployment failed! Check the logs above."
