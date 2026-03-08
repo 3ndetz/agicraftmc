@@ -10,9 +10,13 @@ router.get('/', async (req, res) => {
 
   try {
     const result = await db.query(`
-      SELECT id, title, content, author, created_at, updated_at
-      FROM web_news
-      ORDER BY created_at DESC
+      SELECT n.id, n.title, n.content,
+             COALESCE(u.username, 'Администратор') AS author,
+             n.created_at, n.updated_at
+      FROM web_news n
+      LEFT JOIN web_users u ON n.author_id = u.id
+      WHERE n.is_published = TRUE
+      ORDER BY n.created_at DESC
       LIMIT $1 OFFSET $2
     `, [limit, offset]);
 
@@ -28,10 +32,14 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = await db.query(
-      'SELECT id, title, content, author, created_at, updated_at FROM web_news WHERE id = $1',
-      [id]
-    );
+    const result = await db.query(`
+      SELECT n.id, n.title, n.content,
+             COALESCE(u.username, 'Администратор') AS author,
+             n.created_at, n.updated_at
+      FROM web_news n
+      LEFT JOIN web_users u ON n.author_id = u.id
+      WHERE n.id = $1
+    `, [id]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Новость не найдена' });
