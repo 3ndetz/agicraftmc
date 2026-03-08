@@ -67,13 +67,13 @@ jobs:
           echo "$CHANGED" | grep -q "^limbo/"          && RESTART="$RESTART limbo"
           echo "$CHANGED" | grep -q "^survival/"       && RESTART="$RESTART survival survivalplus"
           echo "$CHANGED" | grep -q "^survival_plus/"  && RESTART="$RESTART survivalplus"
-          if echo "$CHANGED" | grep -q "^backend/"; then
-            RESTART="$RESTART backend"
-            BUILD="$BUILD backend"
+          if echo "$CHANGED" | grep -q "^agicraft_backend/"; then
+            RESTART="$RESTART agicraft_backend"
+            BUILD="$BUILD agicraft_backend"
           fi
-          if echo "$CHANGED" | grep -q "^frontend/"; then
-            RESTART="$RESTART frontend"
-            BUILD="$BUILD frontend"
+          if echo "$CHANGED" | grep -q "^agicraft_frontend/"; then
+            RESTART="$RESTART agicraft_frontend"
+            BUILD="$BUILD agicraft_frontend"
           fi
 
           echo "restart=$RESTART" >> $GITHUB_OUTPUT
@@ -93,7 +93,7 @@ jobs:
 
           for item in gobetween.toml docker-compose.yml .github \
                       velocity survival lobby limbo ai_research \
-                      backend frontend survival_plus plugins-common; do
+                      agicraft_backend agicraft_frontend survival_plus plugins-common; do
             if [ -e "$item" ]; then
               cp -rf "$item" "$PROD_DIR/"
               echo "  synced: $item"
@@ -112,7 +112,7 @@ jobs:
           # Build images for services that need it
           if [ "$RESTART" = "all" ]; then
             echo "Building all services..."
-            docker compose build --no-cache frontend backend
+            docker compose build --no-cache agicraft_frontend agicraft_backend
             docker compose build
           elif [ -n "$BUILD" ]; then
             echo "Building:$BUILD"
