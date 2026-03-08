@@ -1,10 +1,12 @@
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .main-content {
+  position: relative;
+  z-index: 10;
   flex: 1;
-  padding: 40px 0;
 }

@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const paymentRoutes = require('./routes/payment');
 const newsRoutes = require('./routes/news');
+const serversRoutes = require('./routes/servers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +68,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/servers', serversRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

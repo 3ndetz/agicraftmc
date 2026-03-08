@@ -1,52 +1,76 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
 import './Home.css';
 
+function ServerStatus({ server, loading }) {
+  if (loading) {
+    return <span className="server-status status-loading">Проверка…</span>;
+  }
+  if (!server) {
+    return <span className="server-status status-offline">Недоступен</span>;
+  }
+  return server.online
+    ? <span className="server-status status-online">{server.players}/{server.maxPlayers} онлайн</span>
+    : <span className="server-status status-offline">Недоступен</span>;
+}
+
 function Home() {
+  const [servers, setServers] = useState([]);
+  const [statusLoading, setStatusLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/servers/status')
+      .then((res) => setServers(res.data.servers || []))
+      .catch(() => {})
+      .finally(() => setStatusLoading(false));
+  }, []);
+
+  const getServer = (id) => servers.find((s) => s.id === id) || null;
+
   return (
     <div className="home">
-      <section className="hero">
-        <h1>⚡ Добро пожаловать на AgiCraft</h1>
-        <p className="hero-subtitle">
-          Minecraft сервер с поддержкой ИИ агентов
-        </p>
-        <div className="hero-buttons">
-          <Link to="/register" className="btn btn-primary">
-            Начать играть
-          </Link>
-          <Link to="/donate" className="btn btn-secondary">
-            Поддержать проект
-          </Link>
-        </div>
-      </section>
-
-      <section className="features">
-        <h2>Наши серверы</h2>
-        <div className="features-grid">
-          <div className="feature-card">
-            <h3>🌲 Survival</h3>
-            <p>Классический режим выживания с экономикой и защитой территорий</p>
-            <span className="status online">Онлайн: 5/100</span>
-          </div>
-
-          <div className="feature-card">
-            <h3>🤖 AI Research</h3>
-            <p>Экспериментальный сервер для тестирования ИИ агентов</p>
-            <span className="status online">Онлайн: 12/100</span>
-          </div>
-
-          <div className="feature-card">
-            <h3>✨ Survival+ (скоро)</h3>
-            <p>Расширенный режим выживания с новыми механиками</p>
-            <span className="status offline">В разработке</span>
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-badge">Minecraft · Java 1.21.1</div>
+          <h1 className="hero-title">AgiCraft</h1>
+          <p className="hero-subtitle">
+            Minecraft-сервер с поддержкой ИИ-агентов. Исследуй, экспериментируй, создавай.
+          </p>
+          <div className="hero-buttons">
+            <Link to="/register" className="btn btn-primary">Начать играть</Link>
+            <Link to="/donate" className="btn btn-secondary">Поддержать проект</Link>
           </div>
         </div>
       </section>
 
-      <section className="info">
-        <h2>Как подключиться?</h2>
-        <div className="server-info">
-          <code>IP: 188.242.12.214:25565</code>
-          <p>Версия: 1.21.1 (Java Edition)</p>
+      <section className="servers-section">
+        <h2 className="section-title">Серверы</h2>
+
+        <div className="servers-grid">
+          <div className="server-card">
+            <span className="server-card-icon">🌐</span>
+            <h3>AgiCraft Network</h3>
+            <p>Основная точка входа. Подключитесь к сети и выберите сервер внутри.</p>
+            <ServerStatus server={getServer('velocity')} loading={statusLoading} />
+          </div>
+
+          <div className="server-card">
+            <span className="server-card-icon">🤖</span>
+            <h3>AI Research</h3>
+            <p>Экспериментальный сервер для тестирования и исследования ИИ-агентов.</p>
+            <ServerStatus server={getServer('airesearch')} loading={statusLoading} />
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      <section className="connect-section">
+        <h2 className="section-title">Как подключиться?</h2>
+        <div className="connect-box">
+          <code>188.242.12.214:25565</code>
+          <p>Java Edition · версия 1.21.1</p>
         </div>
       </section>
     </div>

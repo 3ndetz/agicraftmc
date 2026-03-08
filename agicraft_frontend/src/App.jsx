@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ParticleCanvas from './components/ParticleCanvas'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -12,6 +13,7 @@ import './App.css'
 function App() {
   return (
     <div className="app">
+      <ParticleCanvas />
       <Header />
       <main className="main-content">
         <Routes>

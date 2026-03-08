@@ -1,20 +1,17 @@
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 function Footer() {
   return (
     <footer className="footer">
-      <div className="container">
-        <p>&copy; 2025 AgiCraft. Все права защищены.</p>
-        <p>Minecraft сервер с искусственным интеллектом</p>
-        <div className="footer-links">
-          <a href="https://discord.gg/agicraft" target="_blank" rel="noopener noreferrer">
-            Discord
-          </a>
-          <a href="https://github.com/agicraft" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-        </div>
-      </div>
+      <p>
+        AgiCraft &middot;{' '}
+        <a href="https://github.com/3ndetz" target="_blank" rel="noopener noreferrer">3ndetz</a>
+        {' '}&middot;{' '}
+        <Link to="/news">Новости</Link>
+        {' '}&middot;{' '}
+        <Link to="/donate">Поддержать</Link>
+      </p>
     </footer>
   );
 }

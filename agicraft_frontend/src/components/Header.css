@@ -1,63 +1,187 @@
-.header {
-  background-color: var(--bg-dark);
-  border-bottom: 2px solid var(--primary-color);
-  padding: 20px 0;
+/* ========== Navigation ========== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 0;
 }
 
-.header .container {
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
 }
 
+/* Logo */
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.nav {
   display: flex;
-  gap: 20px;
   align-items: center;
-}
-
-.nav a {
-  color: var(--text-light);
+  gap: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text);
   text-decoration: none;
-  transition: color 0.2s;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
 }
 
-.nav a:hover {
-  color: var(--primary-color);
+.logo-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-primary);
+  flex-shrink: 0;
 }
 
-.btn-login, .btn-register {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
+/* Center nav links */
+.nav-center {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
-.btn-login {
-  background-color: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
+.nav-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.15s ease;
 }
 
-.btn-register {
-  background-color: var(--primary-color);
-  color: #000;
+.nav-link:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 
-.logout-btn {
-  background-color: transparent;
+.nav-link.active {
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+}
+
+/* Right side auth */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.nav-link-auth {
+  flex-shrink: 0;
+}
+
+.nav-cta {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 0.6rem 1.25rem;
+  border-radius: 24px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
   border: none;
-  color: var(--text-gray);
   cursor: pointer;
-  font-size: 14px;
+  font-family: var(--font-sans);
+  flex-shrink: 0;
 }
 
-.logout-btn:hover {
-  color: var(--danger-color);
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-cta-outline {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+.nav-cta-outline:hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--color-text);
+}
+
+.nav-toggle svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ========== Responsive ========== */
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .nav-center {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+    gap: 2px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-center.open {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-link-auth {
+    display: none;
+  }
 }
