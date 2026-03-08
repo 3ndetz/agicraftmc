@@ -15,6 +15,11 @@ jobs:
       PROD_DIR: ${{ secrets.PROD_DIR || '/d/Repos/NettyanMC' }}
     if: "github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]')"
 
+    defaults:
+      run:
+        # Git Bash on Windows. On Linux just remove this line — /bin/bash is used automatically.
+        shell: '"C:\Program Files\Git\bin\bash.exe" --noprofile --norc -eo pipefail {0}'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,7 +28,6 @@ jobs:
 
       - name: Detect changed services
         id: changes
-        shell: bash
         run: |
           echo "======================================"
           echo "Detecting changed services..."
