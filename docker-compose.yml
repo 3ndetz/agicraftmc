@@ -23,7 +23,23 @@ services:
     volumes:
       - duplicati_config:/config        # Duplicati settings & job configs
       - ./:/source                      # entire project available as backup source
-      - duplicati_backups:/backups      # where backups are stored (or point to HDD)
+      - ./backups:/backups              # backups stored as real folder on disk
+    networks:
+      - nettyan_ssl
+
+  # SFTP file access — sftp <user>@<server-ip> -p 2222
+  # Credentials: ADMIN_USERNAME / ADMIN_PASSWORD in .env
+  sftp:
+    image: atmoz/sftp:latest
+    container_name: mc_sftp
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    command: "${ADMIN_USERNAME:-mcserver}:${ADMIN_PASSWORD:-StrongPass123!}:1001"
+    volumes:
+      - ./:/home/${ADMIN_USERNAME:-mcserver}/files  # весь проект
+      - ./backups:/home/${ADMIN_USERNAME:-mcserver}/backups  # папка бэкапов
+      - sftp_host_keys:/etc/ssh                    # persist host keys (чтобы не слетали при рестарте)
     networks:
       - nettyan_ssl
 
@@ -440,5 +456,5 @@ volumes:
     name: nettyanmc_filebrowser_data
   duplicati_config:
     name: nettyanmc_duplicati_config
-  duplicati_backups:
-    name: nettyanmc_duplicati_backups
+  sftp_host_keys:
+    name: nettyanmc_sftp_host_keys
