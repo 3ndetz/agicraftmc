@@ -6,7 +6,6 @@ const router = express.Router();
 // VarInt helpers (Minecraft protocol)
 function writeVarInt(value) {
   const bytes = [];
-  // Handle negative values and large numbers as unsigned 32-bit
   value = value >>> 0;
   do {
     let temp = value & 0x7F;
@@ -32,37 +31,34 @@ function readVarInt(buf, offset) {
 
 /**
  * Ping a Minecraft server using the Server List Ping (SLP) protocol.
- * Works with Minecraft 1.7+ and proxies like Velocity.
+ * @param {string} host      TCP connection host (Docker internal hostname)
+ * @param {number} port      TCP port
+ * @param {string} pingHost  Host string inside the SLP handshake packet
+ *                           (should match the public-facing hostname, e.g. agicraft.ru)
  */
-function pingServer(host, port, timeout = 4000) {
+function pingServer(host, port, pingHost, timeout = 5000) {
   return new Promise((resolve, reject) => {
     const socket = new net.Socket();
     let buffer = Buffer.alloc(0);
     let done = false;
 
     const timer = setTimeout(() => {
-      if (!done) {
-        done = true;
-        socket.destroy();
-        reject(new Error('Timeout'));
-      }
+      if (!done) { done = true; socket.destroy(); reject(new Error('Timeout')); }
     }, timeout);
 
     socket.connect(port, host, () => {
-      const serverAddr = Buffer.from(host, 'utf8');
+      // Use the public hostname in the handshake packet so Velocity recognises it
+      const serverAddr = Buffer.from(pingHost || host, 'utf8');
 
-      // Handshake packet (0x00)
       const handshakeData = Buffer.concat([
-        writeVarInt(0x00),                                       // Packet ID
-        writeVarInt(767),                                        // Protocol version (1.21.1)
-        writeVarInt(serverAddr.length),                          // Host string length
-        serverAddr,                                              // Host
-        Buffer.from([(port >> 8) & 0xFF, port & 0xFF]),         // Port (big-endian)
+        writeVarInt(0x00),
+        writeVarInt(767),                                        // Protocol version 1.21.1
+        writeVarInt(serverAddr.length),
+        serverAddr,
+        Buffer.from([(port >> 8) & 0xFF, port & 0xFF]),
         writeVarInt(1),                                          // Next state: Status
       ]);
       const handshakePacket = Buffer.concat([writeVarInt(handshakeData.length), handshakeData]);
-
-      // Status request packet (0x00, no payload)
       const statusRequest = Buffer.concat([writeVarInt(1), writeVarInt(0x00)]);
 
       socket.write(Buffer.concat([handshakePacket, statusRequest]));
@@ -72,19 +68,15 @@ function pingServer(host, port, timeout = 4000) {
       buffer = Buffer.concat([buffer, data]);
       try {
         let offset = 0;
-
-        // Read total packet length
         const lenResult = readVarInt(buffer, offset);
         if (!lenResult) return;
         offset = lenResult.offset;
-        if (buffer.length < offset + lenResult.value) return; // Need more data
+        if (buffer.length < offset + lenResult.value) return;
 
-        // Read packet ID
         const packetIdResult = readVarInt(buffer, offset);
         if (!packetIdResult || packetIdResult.value !== 0x00) return;
         offset = packetIdResult.offset;
 
-        // Read JSON string length
         const jsonLenResult = readVarInt(buffer, offset);
         if (!jsonLenResult) return;
         offset = jsonLenResult.offset;
@@ -93,14 +85,9 @@ function pingServer(host, port, timeout = 4000) {
         const jsonStr = buffer.toString('utf8', offset, offset + jsonLenResult.value);
         const response = JSON.parse(jsonStr);
 
-        if (!done) {
-          done = true;
-          clearTimeout(timer);
-          socket.destroy();
-          resolve(response);
-        }
+        if (!done) { done = true; clearTimeout(timer); socket.destroy(); resolve(response); }
       } catch (_) {
-        // Incomplete or malformed data — wait for more
+        // Incomplete data — wait for more
       }
     });
 
@@ -114,52 +101,81 @@ function pingServer(host, port, timeout = 4000) {
   });
 }
 
+/**
+ * Plain TCP connectivity check — no Minecraft protocol.
+ * Returns true if the port is reachable within timeout ms.
+ */
+function tcpCheck(host, port, timeout = 3000) {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    let done = false;
+
+    const timer = setTimeout(() => {
+      if (!done) { done = true; socket.destroy(); resolve(false); }
+    }, timeout);
+
+    socket.connect(port, host, () => {
+      if (!done) { done = true; clearTimeout(timer); socket.destroy(); resolve(true); }
+    });
+
+    socket.on('error', () => {
+      if (!done) { done = true; clearTimeout(timer); resolve(false); }
+    });
+  });
+}
+
 // GET /api/servers/status
 router.get('/status', async (req, res) => {
+  const PUBLIC_HOST = process.env.PUBLIC_HOST || 'agicraft.ru';
+
   const servers = [
     {
       id: 'velocity',
       name: 'AgiCraft Network',
-      description: 'Velocity Proxy — основная точка входа на сеть',
-      host: 'velocity',
+      host: 'velocity',         // Docker-internal TCP target
+      pingHost: PUBLIC_HOST,    // Sent inside SLP handshake — must match Velocity's expected host
       port: 25565,
     },
     {
       id: 'airesearch',
       name: 'AI Research',
-      description: 'Экспериментальный сервер для тестирования ИИ-агентов',
       host: process.env.MINECRAFT_HOST || 'airesearch',
+      pingHost: null,
       port: parseInt(process.env.MINECRAFT_PORT || '25570'),
     },
   ];
 
   const results = await Promise.allSettled(
-    servers.map((srv) => pingServer(srv.host, srv.port))
+    servers.map(async (srv) => {
+      // Try full SLP ping first (gives player counts)
+      try {
+        const data = await pingServer(srv.host, srv.port, srv.pingHost);
+        return {
+          id: srv.id,
+          name: srv.name,
+          online: true,
+          players: data.players?.online ?? 0,
+          maxPlayers: data.players?.max ?? 0,
+          version: data.version?.name ?? null,
+        };
+      } catch (_) {
+        // SLP failed — fall back to plain TCP check (online/offline, no player count)
+        const reachable = await tcpCheck(srv.host, srv.port);
+        return {
+          id: srv.id,
+          name: srv.name,
+          online: reachable,
+          players: null,    // null = count unknown
+          maxPlayers: null,
+          version: null,
+        };
+      }
+    })
   );
 
   const statuses = results.map((result, i) => {
-    const srv = servers[i];
-    if (result.status === 'fulfilled') {
-      const data = result.value;
-      return {
-        id: srv.id,
-        name: srv.name,
-        description: srv.description,
-        online: true,
-        players: data.players?.online ?? 0,
-        maxPlayers: data.players?.max ?? 0,
-        version: data.version?.name ?? null,
-      };
-    }
-    return {
-      id: srv.id,
-      name: srv.name,
-      description: srv.description,
-      online: false,
-      players: 0,
-      maxPlayers: 0,
-      version: null,
-    };
+    if (result.status === 'fulfilled') return result.value;
+    return { id: servers[i].id, name: servers[i].name, online: false, players: 0, maxPlayers: 0, version: null };
   });
 
   res.json({ servers: statuses });

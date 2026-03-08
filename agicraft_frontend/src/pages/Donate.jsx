@@ -51,9 +51,6 @@ function Donate() {
   return (
     <div className="donate-page">
       <h1>💎 Поддержать проект</h1>
-      <p className="donate-subtitle">
-        Купите AgiCoins или донатные ранги для получения преимуществ на сервере
-      </p>
 
       {error && <div className="error-message">{error}</div>}
 

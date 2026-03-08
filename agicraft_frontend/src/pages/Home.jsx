@@ -7,12 +7,14 @@ function ServerStatus({ server, loading }) {
   if (loading) {
     return <span className="server-status status-loading">Проверка…</span>;
   }
-  if (!server) {
+  if (!server || !server.online) {
     return <span className="server-status status-offline">Недоступен</span>;
   }
-  return server.online
-    ? <span className="server-status status-online">{server.players}/{server.maxPlayers} онлайн</span>
-    : <span className="server-status status-offline">Недоступен</span>;
+  // players === null means TCP is up but SLP gave no player count
+  if (server.players === null) {
+    return <span className="server-status status-online">В сети</span>;
+  }
+  return <span className="server-status status-online">{server.players}/{server.maxPlayers} онлайн</span>;
 }
 
 function Home() {
@@ -32,7 +34,7 @@ function Home() {
     <div className="home">
       <section className="hero-section">
         <div className="hero-content">
-          <div className="hero-badge">Minecraft · Java 1.21.1</div>
+          <div className="hero-badge">Minecraft · Java 1.21</div>
           <h1 className="hero-title">AgiCraft</h1>
           <p className="hero-subtitle">
             Minecraft-сервер с поддержкой ИИ-агентов. Исследуй, экспериментируй, создавай.
@@ -67,10 +69,20 @@ function Home() {
       <div className="section-divider" />
 
       <section className="connect-section">
-        <h2 className="section-title">Как подключиться?</h2>
+        <h2 className="section-title">
+          Как подключиться?{' '}
+          <a
+            href="https://www.minecraft.net/ru-ru/article/how-play-minecraft-server"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="connect-help-link"
+          >
+            Инструкция
+          </a>
+        </h2>
         <div className="connect-box">
-          <code>188.242.12.214:25565</code>
-          <p>Java Edition · версия 1.21.1</p>
+          <code>agicraft.ru</code>
+          <p>Java Edition · версия 1.21</p>
         </div>
       </section>
     </div>

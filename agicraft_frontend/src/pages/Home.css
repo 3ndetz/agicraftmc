@@ -157,6 +157,23 @@
   margin: 0 auto 4rem;
 }
 
+/* Inline help link in section heading */
+.connect-help-link {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--color-accent);
+  text-decoration: none;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.connect-help-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 /* Connect section */
 .connect-section {
   position: relative;
