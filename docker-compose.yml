@@ -2,6 +2,40 @@ version: '3.8'
 
 services:
   ## UTILITY SECTION
+
+  # Web file manager — upload/download/manage JARs, worlds, configs remotely
+  # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
+  # filebrowser:
+
+  # Backup GUI — schedule, versioning, restore via browser
+  # Access at http://<server-ip>:8200
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: mc_duplicati
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Moscow
+    volumes:
+      - duplicati_config:/config        # Duplicati settings & job configs
+      - ./:/source                      # entire project available as backup source
+      - duplicati_backups:/backups      # where backups are stored (or point to HDD)
+    networks:
+      - nettyan_ssl
+
+  # Web file manager — upload/download/manage JARs, worlds, configs remotely
+  # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: mc_filebrowser
+    restart: unless-stopped
+    volumes:
+      - ./:/srv                          # entire project root accessible
+      - filebrowser_data:/database       # settings & users persist
+    networks:
+      - nettyan_ssl
+
   ## MANDATORY POSTGRES DATABASE FOR SERVERS
   postgres:
     image: postgres:16-alpine
@@ -365,3 +399,9 @@ volumes:
     name: nettyanmc_lobby_data
   survivalplus_data:
     name: nettyanmc_survivalplus_data
+  filebrowser_data:
+    name: nettyanmc_filebrowser_data
+  duplicati_config:
+    name: nettyanmc_duplicati_config
+  duplicati_backups:
+    name: nettyanmc_duplicati_backups
