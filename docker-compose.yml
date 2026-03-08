@@ -260,14 +260,14 @@ services:
 
 ## WEBPACK SECTION
 
-  backend:
-    build: ./backend
+  agicraft_backend:
+    build: ./agicraft_backend
     container_name: agicraft_backend
     restart: unless-stopped
     expose:
       - "3000"  # Internal port (accessible via Caddy)
     volumes:
-      - ./backend/src:/app/src
+      - ./agicraft_backend/src:/app/src
     networks:
       - mc
       - nettyan_ssl
@@ -298,8 +298,8 @@ services:
       retries: 3
       start_period: 40s
 
-  frontend:
-    build: ./frontend
+  agicraft_frontend:
+    build: ./agicraft_frontend
     container_name: agicraft_frontend
     restart: unless-stopped
     expose:
@@ -308,7 +308,7 @@ services:
       - mc
       - nettyan_ssl
     depends_on:
-      backend:
+      agicraft_backend:
         condition: service_healthy
     environment:
       VITE_API_URL: ${VITE_API_URL:-/api}
