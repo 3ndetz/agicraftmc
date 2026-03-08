@@ -39,9 +39,10 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
-        filebrowser users update "$$FB_USERNAME" --password "$$FB_PASSWORD" 2>/dev/null \
-          || filebrowser users add "$$FB_USERNAME" "$$FB_PASSWORD" --perm.admin 2>/dev/null
-        exec filebrowser
+        DB=/database/filebrowser.db
+        filebrowser -d $$DB users update "$$FB_USERNAME" --password "$$FB_PASSWORD" 2>/dev/null \
+          || filebrowser -d $$DB users add "$$FB_USERNAME" "$$FB_PASSWORD" --perm.admin 2>/dev/null
+        exec filebrowser -d $$DB
     volumes:
       - ./:/srv                          # entire project root accessible
       - filebrowser_data:/database       # settings & users persist
