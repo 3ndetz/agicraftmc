@@ -8,7 +8,7 @@ services:
   # filebrowser:
 
   # Backup GUI — schedule, versioning, restore via browser
-  # Access at http://<server-ip>:8200
+  # Access at backups.agicraft.ru  (credentials via ADMIN_USERNAME / ADMIN_PASSWORD in .env)
   duplicati:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: mc_duplicati
@@ -17,6 +17,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Moscow
+      - SETTINGS_ENCRYPTION_KEY=${DUPLICATI_ENCRYPTION_KEY:-StrongPass123!}
+      - DUPLICATI__WEBSERVICE_PASSWORD=${ADMIN_PASSWORD:-StrongPass123!}
+      - DUPLICATI__WEBSERVICE_USERNAME=${ADMIN_USERNAME:-mcserver}
     volumes:
       - duplicati_config:/config        # Duplicati settings & job configs
       - ./:/source                      # entire project available as backup source
@@ -25,11 +28,20 @@ services:
       - nettyan_ssl
 
   # Web file manager — upload/download/manage JARs, worlds, configs remotely
-  # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
+  # Access at files.agicraft.ru  (credentials via FB_USERNAME / FB_PASSWORD in .env)
   filebrowser:
     image: filebrowser/filebrowser:latest
     container_name: mc_filebrowser
     restart: unless-stopped
+    environment:
+      FB_USERNAME: ${FB_USERNAME:-mcserver}
+      FB_PASSWORD: ${FB_PASSWORD:-StrongPass123!}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        filebrowser users update "$$FB_USERNAME" --password "$$FB_PASSWORD" 2>/dev/null \
+          || filebrowser users add "$$FB_USERNAME" "$$FB_PASSWORD" --perm.admin 2>/dev/null
+        exec filebrowser
     volumes:
       - ./:/srv                          # entire project root accessible
       - filebrowser_data:/database       # settings & users persist
@@ -374,6 +386,30 @@ services:
       networks:
         - mc
         - nettyan_ssl
+
+  # One-shot init: sets portainer admin credentials on first run only (ignored if admin already exists)
+  portainer-init:
+      image: curlimages/curl:latest
+      container_name: portainer_init
+      restart: on-failure
+      environment:
+        ADMIN_USERNAME: ${ADMIN_USERNAME:-mcserver}
+        ADMIN_PASSWORD: ${ADMIN_PASSWORD:-StrongPass123!}
+      command:
+        - sh
+        - -c
+        - |
+          sleep 5 &&
+          curl -sf -X POST http://portainer:9000/api/users/admin/init \
+            -H "Content-Type: application/json" \
+            -d "{\"Username\":\"$$ADMIN_USERNAME\",\"Password\":\"$$ADMIN_PASSWORD\"}" \
+          && echo "Portainer: admin initialized" \
+          || echo "Portainer: admin already exists (OK)"
+      networks:
+        - mc
+        - nettyan_ssl
+      depends_on:
+        - portainer
 
 networks:
   mc:
