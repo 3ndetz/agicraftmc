@@ -42,10 +42,55 @@ backups/
 Внутри каждого архива:
 
 ```text
-YYYY-MM-DD/
-  world/
-  plugins/
-  server.jar
+./world/             ← мир (и world_nether, world_the_end)
+./plugins/           ← динамические данные плагинов
+./paper-*.jar        ← серверный JAR
+postgres-backup.sql  ← дамп всей БД
+```
+
+## Восстановление
+
+> Выполнять на сервере из папки проекта.
+
+### 1. Выбрать нужный архив
+
+```bash
+ls backups/airesearch/
+# daily-2025-03-08.tar.gz
+# daily-2025-03-09.tar.gz
+# weekly-2025-03-03.tar.gz
+# monthly-2025-02-01.tar.gz
+```
+
+### 2. Остановить сервер
+
+```bash
+docker compose stop airesearch
+```
+
+### 3. Восстановить файлы мира и плагинов
+
+```bash
+# Распаковать всё, кроме postgres дампа, прямо в data/
+tar -xzf backups/airesearch/daily-2025-03-09.tar.gz \
+    --exclude='postgres-backup.sql' \
+    -C ./ai_research/data/
+```
+
+### 4. Восстановить PostgreSQL
+
+```bash
+# Извлечь postgres-backup.sql из архива и подать напрямую в psql
+tar -xzf backups/airesearch/daily-2025-03-09.tar.gz \
+    postgres-backup.sql -O | \
+    docker exec -i minecraft_postgres psql \
+        -U mcserver -d minecraft_server
+```
+
+### 5. Запустить сервер
+
+```bash
+docker compose start airesearch
 ```
 
 ## Raw

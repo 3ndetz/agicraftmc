@@ -22,8 +22,20 @@ mkdir -p "$DEST"
 log "=== Backup started: $DATE ==="
 
 # ------------------------------------------------------------------------------
+# Dump PostgreSQL
+# ------------------------------------------------------------------------------
+PG_DUMP=/tmp/postgres-backup.sql
+log "Dumping PostgreSQL (${POSTGRES_DB})..."
+PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
+    -h "$POSTGRES_HOST" \
+    -U "$POSTGRES_USER" \
+    "$POSTGRES_DB" \
+    > "$PG_DUMP"
+log "PostgreSQL dump: $(du -sh "$PG_DUMP" | cut -f1)"
+
+# ------------------------------------------------------------------------------
 # Create daily archive
-# Backs up: world + all dimension worlds + plugins dynamic data + server JARs
+# Backs up: world + all dimension worlds + plugins dynamic data + server JARs + postgres dump
 # Excludes: logs, cache, BlueMap rendered tiles (regeneratable, huge)
 # ------------------------------------------------------------------------------
 ARCHIVE="$DEST/daily-$DATE.tar.gz"
@@ -35,8 +47,10 @@ tar -czf "$ARCHIVE" \
     --exclude='./cache/*' \
     --exclude='./plugins/BlueMap/web/maps' \
     --warning=no-file-changed \
-    -C "$SRC" \
-    .
+    -C "$SRC" . \
+    -C /tmp postgres-backup.sql
+
+rm -f "$PG_DUMP"
 
 SIZE=$(du -sh "$ARCHIVE" | cut -f1)
 log "Archive created: $ARCHIVE ($SIZE)"

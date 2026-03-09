@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
-# bash for scripting, tar+gzip for archives, tzdata for Moscow time
-RUN apk add --no-cache bash tar gzip tzdata
+# bash for scripting, tar+gzip for archives, tzdata for Moscow time, postgresql-client for pg_dump
+RUN apk add --no-cache bash tar gzip tzdata postgresql-client
 
 COPY backup.sh /usr/local/bin/backup.sh
 RUN chmod +x /usr/local/bin/backup.sh

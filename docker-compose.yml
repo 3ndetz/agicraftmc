@@ -16,9 +16,18 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Moscow
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-minecraft_server}
+      - POSTGRES_USER=${POSTGRES_USER:-mcserver}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-StrongPass123!}
     volumes:
       - ./ai_research/data:/source:ro   # backup source (read-only)
       - ./backups:/backups              # backups stored as real folder on disk
+    networks:
+      - mc
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # Web file manager — upload/download/manage JARs, worlds, configs remotely
   # Access at files.agicraft.ru  (credentials via FB_USERNAME / FB_PASSWORD in .env)
