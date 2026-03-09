@@ -75,6 +75,10 @@ jobs:
             RESTART="$RESTART agicraft_frontend"
             BUILD="$BUILD agicraft_frontend"
           fi
+          if echo "$CHANGED" | grep -q "^backup/"; then
+            RESTART="$RESTART mc-backup"
+            BUILD="$BUILD mc-backup"
+          fi
 
           echo "restart=$RESTART" >> $GITHUB_OUTPUT
           echo "build=$BUILD" >> $GITHUB_OUTPUT
@@ -93,7 +97,8 @@ jobs:
 
           for item in gobetween.toml docker-compose.yml .github \
                       velocity survival lobby limbo ai_research \
-                      agicraft_backend agicraft_frontend survival_plus plugins-common; do
+                      agicraft_backend agicraft_frontend survival_plus plugins-common \
+                      backup scripts postgres; do
             if [ -e "$item" ]; then
               cp -rf "$item" "$PROD_DIR/"
               echo "  synced: $item"
@@ -112,7 +117,7 @@ jobs:
           # Build images for services that need it
           if [ "$RESTART" = "all" ]; then
             echo "Building all services..."
-            docker compose build --no-cache agicraft_frontend agicraft_backend
+            docker compose build --no-cache agicraft_frontend agicraft_backend mc-backup
             docker compose build
           elif [ -n "$BUILD" ]; then
             echo "Building:$BUILD"

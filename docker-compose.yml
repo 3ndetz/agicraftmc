@@ -7,41 +7,18 @@ services:
   # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
   # filebrowser:
 
-  # Backup GUI — schedule, versioning, restore via browser
-  # Access at backups.agicraft.ru  (credentials via ADMIN_USERNAME / ADMIN_PASSWORD in .env)
-  duplicati:
-    image: lscr.io/linuxserver/duplicati:latest
-    container_name: mc_duplicati
+  # Backup — daily tar.gz snapshots of airesearch data with rotation
+  # Logs: docker logs mc_backup
+  # Manual run: docker exec mc_backup /usr/local/bin/backup.sh
+  mc-backup:
+    build: ./backup
+    container_name: mc_backup
     restart: unless-stopped
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Europe/Moscow
-      - SETTINGS_ENCRYPTION_KEY=${DUPLICATI_ENCRYPTION_KEY:-StrongPass123!}
-      - DUPLICATI__WEBSERVICE_PASSWORD=${ADMIN_PASSWORD:-StrongPass123!}
-      - DUPLICATI__WEBSERVICE_USERNAME=${ADMIN_USERNAME:-mcserver}
     volumes:
-      - duplicati_config:/config        # Duplicati settings & job configs
-      - ./:/source                      # entire project available as backup source
+      - ./ai_research/data:/source:ro   # backup source (read-only)
       - ./backups:/backups              # backups stored as real folder on disk
-    networks:
-      - nettyan_ssl
-
-  # SFTP file access — sftp <user>@<server-ip> -p 2222
-  # Credentials: ADMIN_USERNAME / ADMIN_PASSWORD in .env
-  sftp:
-    image: atmoz/sftp:latest
-    container_name: mc_sftp
-    restart: unless-stopped
-    ports:
-      - "2222:22"
-    command: "${ADMIN_USERNAME:-mcserver}:${ADMIN_PASSWORD:-StrongPass123!}:1001"
-    volumes:
-      - ./:/home/${ADMIN_USERNAME:-mcserver}/files  # весь проект
-      - ./backups:/home/${ADMIN_USERNAME:-mcserver}/backups  # папка бэкапов
-      - sftp_host_keys:/etc/ssh                    # persist host keys (чтобы не слетали при рестарте)
-    networks:
-      - nettyan_ssl
 
   # Web file manager — upload/download/manage JARs, worlds, configs remotely
   # Access at files.agicraft.ru  (credentials via FB_USERNAME / FB_PASSWORD in .env)
@@ -454,7 +431,3 @@ volumes:
     name: nettyanmc_survivalplus_data
   filebrowser_data:
     name: nettyanmc_filebrowser_data
-  duplicati_config:
-    name: nettyanmc_duplicati_config
-  sftp_host_keys:
-    name: nettyanmc_sftp_host_keys
