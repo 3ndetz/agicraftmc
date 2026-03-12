@@ -2,7 +2,7 @@
 # ----------------------------------------------
 
 # Enable the module
-enabled: true
+enabled: false
 
 # Play sound on bed interaction
 play_sound: false

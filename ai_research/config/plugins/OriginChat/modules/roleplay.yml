@@ -17,8 +17,8 @@ command_ranges:
   gball: -1
 
 # Enable/disable global commands
-global_commands_enabled: true
+global_commands_enabled: false
 
 # Enable/disable roleplay module features
-enabled: true
+enabled: false
 

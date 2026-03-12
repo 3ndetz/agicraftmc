@@ -4,7 +4,7 @@ enabled: true
 # Player name format above head.
 # Use {playername} placeholder to mark where the vanilla player name must appear.
 # You can use PlaceholderAPI placeholders, for example %luckperms_prefix%.
-format: '%luckperms_prefix% {playername}'
+format: '%luckperms_prefix%{playername}'
 
 # Update period in ticks (20 ticks = 1 second)
 update-interval-ticks: 40

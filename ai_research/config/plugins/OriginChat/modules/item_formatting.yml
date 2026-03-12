@@ -1,7 +1,7 @@
 # Configuration for the Item Formatting module
 
 # Enable/disable the module
-enabled: true
+enabled: false
 
 # Allow the use of Markdown syntax when renaming items
 # Supported formats:

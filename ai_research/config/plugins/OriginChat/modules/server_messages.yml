@@ -9,10 +9,10 @@ leave_message_enabled: true
 # Fallback templates used when localized messages are missing.
 # You can leave this list empty to disable fallback text.
 join_messages:
-- '&f+ &f{player} &7joined the server'
+- '&f+ &f{player} :)'
 
 leave_messages:
-- '&f- &f{player} &7left the server'
+- '&f- &f{player} :('
 
 # Enable/disable personal welcome messages
 personal_welcome:
@@ -34,19 +34,19 @@ personal_welcome:
     message: ''
 
 # Enable/disable operator messages
-op_message_enabled: true
+op_message_enabled: false
 
 # Disable vanilla operator messages
-disable_vanilla_op_messages: true
+disable_vanilla_op_messages: false
 
 # Enable/disable gamemode change messages
-gamemode_message_enabled: true
+gamemode_message_enabled: false
 
 # Disable vanilla gamemode messages
-disable_vanilla_gamemode_messages: true
+disable_vanilla_gamemode_messages: false
 
 # Enable/disable seed command messages
-seed_message_enabled: true
+seed_message_enabled: false
 
 # Disable vanilla seed messages
 disable_vanilla_seed_messages: true

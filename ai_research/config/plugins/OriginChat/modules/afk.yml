@@ -1,15 +1,15 @@
 # Configuration for AFK Module
-enabled: true
+enabled: false
 
 # Auto AFK settings
 auto-afk:
-  enabled: true
+  enabled: false
   time: 300
 
 # Invulnerability settings
 invulnerable:
-  mobs: true
+  mobs: false
   players: false
 
 # Whether mobs should ignore players in AFK mode
-mobs-ignore-afk: true
+mobs-ignore-afk: false

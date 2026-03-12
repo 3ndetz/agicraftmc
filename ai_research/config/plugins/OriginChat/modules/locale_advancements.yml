@@ -2,10 +2,10 @@
 
 advancements:
   # Enable module
-  enabled: true
+  enabled: false
   
   # Disable vanilla advancement messages
-  disable-vanilla-messages: true
+  disable-vanilla-messages: false
   
   # Vanilla message settings (overrides disable-vanilla-messages if specified)
   vanilla:

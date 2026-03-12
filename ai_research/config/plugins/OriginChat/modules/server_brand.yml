@@ -6,4 +6,4 @@ enabled: true
 
 # Server core name to be displayed in the F3 menu
 # Supports color codes (&f, &f, &f, etc.) and HEX colors (#RRGGBB)
-server_brand: '&fOriginChat'
+server_brand: '&fAgiCraft'
