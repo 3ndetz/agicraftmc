@@ -215,27 +215,27 @@ main:
     # Permission: limboauth.admin.help
     help: TRUE
   strings:
-    reload: "{PRFX} Конфиг перезагружен. Как будто сервер - это плита и мы переключаем плиту с варки яиц на чай!"
-    error-occurred: "{PRFX} &cОго, гля! Кто-то там в глубинах сервера решил устроить вечеринку без приглашения!"
-    ratelimited: "{PRFX} &cНу-ну, не будь жадиной! Погоди немного перед следующим использованием!"
-    database-error-kick: "{PRFX} &cБаза данных взбунтовалась! Наверно, устала от этих ваших игр..."
-    not-player: "{PRFX} &cКак так? Это же не игрушка для консоли - ты кто тут, Котёнок Домашний?"
-    not-registered: "{PRFX} &cОй, да ты как новенький! Иль бабло забыл внести за PREMIUM аккаунт!"
-    cracked-command: "{PRFX}{NL}&aТолько не вздумай эту команду юзать! Твоя PREMIUM-шник карта уже стара"
-    wrong-password: "{PRFX} &cПароль как у рыбы-золотого карася? Попробуй ещё!"
-    nickname-invalid-kick: "{PRFX}{NL}&cВаша кличка словно у котёнка на шпротик отравилась! Смените что-нибудь поприличнее."
+    reload: "{PRFX} Конфигурация перезагружена."
+    error-occurred: "{PRFX} &cПроизошла ошибка сервера. Попробуй позже."
+    ratelimited: "{PRFX} &cСлишком много запросов. Подожди немного."
+    database-error-kick: "{PRFX} &cОшибка базы данных. Попробуй зайти позже."
+    not-player: "{PRFX} &cЭта команда доступна только игрокам."
+    not-registered: "{PRFX} &cТы не зарегистрирован. Введи /reg пароль пароль"
+    cracked-command: "{PRFX}{NL}&cЭта команда недоступна для премиум-аккаунтов."
+    wrong-password: "{PRFX} &cНеверный пароль. Попробуй ещё раз!"
+    nickname-invalid-kick: "{PRFX}{NL}&cНик содержит недопустимые символы. Поменяй ник и зайди снова."
     reconnect-kick: "{PRFX}{NL}&cКакой же ты непослушный! Переподключись - сервер тебя проверять собрался!"
     # 6 hours by default in ip-limit-valid-time
     ip-limit-kick: "{PRFX}{NL}{NL}&cОго, столько аккаунтов на одном IP! Смени адрес, как будто это домашний Wi-Fi!"
     wrong-nickname-case-kick: "{PRFX}{NL}&cСлушай сюда: приходи с кличкой &6{0}&c, а не &6{1}! Иначе боты тебя забанят!"
-    bossbar: "{PRFX} У тебя осталось всего лишь {0} секунд до входа как в настоящую игру!"
-    times-up: "{PRFX}{NL}&cВремя игры закончилось! Как будто на детской вечеринке!"
-    login-premium: "{PRFX} Твой PREMIUM аккаунт сам тебя загрузил, прям волшебник!" # Can be empty.
-    login-premium-title: "{PRFX} Двери открыты!" # Can be empty.
-    login-premium-subtitle: "&aВам удалось войти как VIP-персона в кое-каких играх!" # Can be empty.
-    login-floodgate: "{PRFX} Твой Bedrock аккаунт тебя автоматически впустил, прям как в Disneyland!" # Can be empty.
-    login-floodgate-title: "{PRFX} Добро пожаловать в наш клуб!" # Can be empty.
-    login-floodgate-subtitle: "&aСегодня твой день как гостя из блоков!" # Can be empty.
+    bossbar: "{PRFX} До вылета: {0} сек."
+    times-up: "{PRFX}{NL}&cВремя вышло! Зайди на сервер снова."
+    login-premium: "{PRFX} Премиум-аккаунт подтверждён, вход выполнен автоматически." # Can be empty.
+    login-premium-title: "{PRFX} Добро пожаловать!" # Can be empty.
+    login-premium-subtitle: "&aВход выполнен!" # Can be empty.
+    login-floodgate: "{PRFX} Bedrock-аккаунт подтверждён, вход выполнен автоматически." # Can be empty.
+    login-floodgate-title: "{PRFX} Добро пожаловать!" # Can be empty.
+    login-floodgate-subtitle: "&aBedrock-аккаунт подтверждён!" # Can be empty.
     login: "{PRFX} Логинься: /l и пароль"
     login-wrong-password: "{PRFX} &cНу как можно так ошибаться? Осталось всего лишь {0} попытки!"
     login-wrong-password-kick: "{PRFX}{NL}&cНеправильный пароль слишком много раз. Похоже, ты пытался взломать замок с помощью кувалды!"
@@ -249,7 +249,7 @@ main:
     register-different-passwords: "{PRFX} &cПароли-то у тебя разные! Как у двойника-обманщика!"
     register-password-too-short: "{PRFX} &cТакой короткий пароль - это как одноразовая игрушка!"
     register-password-too-long: "{PRFX} Пароль слишком длинный, ты что, пишешь поэму?"
-    register-password-unsafe: "{PRFX} &cПароль как у шпиона - слишком простой!"
+    register-password-unsafe: "{PRFX} &cПароль слишком простой. Придумай что-нибудь посложнее."
     register-successful: "{PRFX} &aМолодец! Ты официально зарегистрирован!"
     register-title: "{PRFX} Готов к приключениям?" # Can be empty.
     register-subtitle: "&aЗарегайся: &6/register <пароль> <повторить пароль>" # Can be empty.
@@ -261,7 +261,7 @@ main:
     already-premium: "{PRFX} &cТы уже крутой как премиум-подписка! Что ж ты тогда тут?"
     not-premium: "{PRFX} &cКак это так? А ты не PREMIUM, батенька!"
     premium-usage: "{PRFX} Чтоб активировать PREMIУM, введи /premium <текущий пароль> подтверждай"
-    event-cancelled: "{PRFX} Вечеринка входа отменена. Видно, не все гости успели с часами!"
+    event-cancelled: "{PRFX} Вход отменён. Попробуй зайти снова."
     force-unregister-successful: "{PRFX} &6{0} &aушёл из игры по велению администратора"
     force-unregister-kick: "{PRFX}{NL}&aТы изгнан по королевскому указу! Удачи в новом мире!"
     force-unregister-not-successful: "{PRFX} &cНе удалось удалить игрока, он как будто не существовал!"
@@ -292,8 +292,8 @@ main:
     totp-qr: "{PRFX} Сканируй QR код тут -> [Открой этот адрес]({QRCODE}) в своём браузере!"
     totp-token: "{PRFX} Твой TOTP токен (Кликай чтобы скопировать): &6{TOKEN}"
     totp-recovery: "{PRFX} Вспомогательные коды для чрезвычайных ситуаций:{NL}{RECOVERYCODES}"
-    destroy-session-successful: "{PRFX} &eСеанс разрушен как хрупкое стекло! Теперь нужно заново зайти, словно в первый раз!"
-    mod-session-expired: "{PRFX} Сеанс истёк, как старый йогурт. Входи ещё разок!"
+    destroy-session-successful: "{PRFX} &eСеанс завершён. При следующем входе потребуется авторизация."
+    mod-session-expired: "{PRFX} Сеанс истёк. Войди снова."
 
 # Database settings
 database:
