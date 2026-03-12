@@ -51,8 +51,8 @@ jobs:
           echo "Changed files:"
           echo "$CHANGED"
 
-          # Full restart if docker-compose or shared plugins changed
-          if echo "$CHANGED" | grep -qE "^docker-compose\.yml|^plugins-common/"; then
+          # Full restart if git diff failed or core files changed
+          if [ "$CHANGED" = "all" ] || echo "$CHANGED" | grep -qE "^docker-compose\.yml|^plugins-common/"; then
             echo "Core files changed — restarting all services"
             echo "restart=all" >> $GITHUB_OUTPUT
             exit 0
