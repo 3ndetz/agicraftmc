@@ -47,6 +47,7 @@ tar -czf "$ARCHIVE" \
     --exclude='./cache' \
     --exclude='./cache/*' \
     --exclude='./plugins/BlueMap/web/maps' \
+    --exclude='./data/bluemap' \
     -C "$SRC" . \
     -C /tmp postgres-backup.sql
 TAR_EXIT=$?
