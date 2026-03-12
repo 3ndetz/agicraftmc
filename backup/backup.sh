@@ -2,11 +2,11 @@
 # ==============================================================================
 # Minecraft server backup script — airesearch
 # Rotation policy:
-#   daily-YYYY-MM-DD.tar.gz  — created every day, kept last 2
-#   weekly-YYYY-MM-DD.tar.gz — promoted every Monday, kept last 1
+#   daily-YYYY-MM-DD.tar.gz   — created every day, kept last 2
+#   weekly-YYYY-MM-DD.tar.gz  — promoted every Monday, kept last 1
 #   monthly-YYYY-MM-DD.tar.gz — promoted on 1st of month, kept last 1
 # ==============================================================================
-set -euo pipefail
+set -uo pipefail   # НЕ -e: tar может вернуть 1 если файлы менялись во время архивации (сервер работает)
 
 DATE=$(date +%Y-%m-%d)
 DOW=$(date +%u)   # 1=Monday ... 7=Sunday
@@ -16,6 +16,7 @@ DEST=/backups/airesearch
 SRC=/source        # mounted from ./ai_research/data
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+die() { log "ERROR: $*"; exit 1; }
 
 mkdir -p "$DEST"
 
@@ -30,13 +31,13 @@ PGPASSWORD="$POSTGRES_PASSWORD" pg_dump \
     -h "$POSTGRES_HOST" \
     -U "$POSTGRES_USER" \
     "$POSTGRES_DB" \
-    > "$PG_DUMP"
+    > "$PG_DUMP" || die "pg_dump failed"
 log "PostgreSQL dump: $(du -sh "$PG_DUMP" | cut -f1)"
 
 # ------------------------------------------------------------------------------
 # Create daily archive
-# Backs up: world + all dimension worlds + plugins dynamic data + server JARs + postgres dump
-# Excludes: logs, cache, BlueMap rendered tiles (regeneratable, huge)
+# Исключаем: logs, cache, BlueMap тайлы (регенерируются, огромные)
+# tar может вернуть 1 если файл изменился во время архивации — это нормально для живого сервера
 # ------------------------------------------------------------------------------
 ARCHIVE="$DEST/daily-$DATE.tar.gz"
 
@@ -46,11 +47,21 @@ tar -czf "$ARCHIVE" \
     --exclude='./cache' \
     --exclude='./cache/*' \
     --exclude='./plugins/BlueMap/web/maps' \
-    --warning=no-file-changed \
     -C "$SRC" . \
     -C /tmp postgres-backup.sql
+TAR_EXIT=$?
 
 rm -f "$PG_DUMP"
+
+# exit 1 от tar = "файлы менялись" — архив при этом создаётся корректно
+# exit 2 = реальная ошибка (нет места, нет прав и т.д.)
+if [ "$TAR_EXIT" -gt 1 ]; then
+    die "tar failed with exit code $TAR_EXIT (disk full? permission denied?)"
+elif [ "$TAR_EXIT" -eq 1 ]; then
+    log "WARNING: Some files changed during backup (server was running) — archive is OK"
+fi
+
+[ -s "$ARCHIVE" ] || die "Archive is empty or not created: $ARCHIVE"
 
 SIZE=$(du -sh "$ARCHIVE" | cut -f1)
 log "Archive created: $ARCHIVE ($SIZE)"

@@ -21,7 +21,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-mcserver}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-StrongPass123!}
     volumes:
-      - ./ai_research/data:/source:ro   # backup source (read-only)
+      - ./ai_research/data:/source:ro     # backup source (read-only)
       - ./backups:/backups              # backups stored as real folder on disk
     networks:
       - mc
@@ -344,6 +344,7 @@ services:
   rcon-panel:
     image: itzg/rcon
     container_name: rcon_web_admin
+    restart: unless-stopped
     ports:
       - "4326:4326"
       - "4327:4327"
