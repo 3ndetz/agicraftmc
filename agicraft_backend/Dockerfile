@@ -1,7 +1,4 @@
-FROM node:20-alpine
-
-# Устанавливаем build tools для нативных модулей
-RUN apk add --no-cache python3 make g++
+FROM node:20
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -9,7 +6,7 @@ WORKDIR /app
 # Копируем package.json и package-lock.json
 COPY package*.json ./
 
-# Устанавливаем зависимости (пересоберутся под Alpine Linux)
+# Устанавливаем зависимости
 RUN npm ci --production
 
 # Копируем исходный код

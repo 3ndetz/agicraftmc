@@ -123,11 +123,11 @@ jobs:
           # Build images for services that need it
           if [ "$RESTART" = "all" ]; then
             echo "Building all services..."
-            docker compose build --no-cache agicraft_frontend agicraft_backend mc-backup
+            docker compose build agicraft_frontend agicraft_backend mc-backup
             docker compose build
           elif [ -n "$BUILD" ]; then
             echo "Building:$BUILD"
-            docker compose build --no-cache $BUILD
+            docker compose build $BUILD
           else
             echo "No builds needed"
           fi
