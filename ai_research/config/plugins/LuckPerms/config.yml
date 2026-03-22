@@ -1,4 +1,5 @@
 server: airesearch
+auto-install-translations: false
 include-global: true
 use-server-uuid-cache: true
 storage-method: postgresql

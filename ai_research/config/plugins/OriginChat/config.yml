@@ -8,7 +8,7 @@ settings:
   prefix: '&7[&fOriginChat&7]'
   # Automatic update checker via Spigot API
   update-checker:
-    enabled: true
+    enabled: false
 
 # Locale settings
 locale:
@@ -21,23 +21,23 @@ locale:
 modules:
   # Module status (true - enabled, false - disabled)
   chat: true
-  tab: true
-  name_tags: true
-  private_messages: true
-  roleplay: true
-  server_messages: true
-  locale_advancements: true
-  locale_deaths: true
-  scoreboard: true
-  server_brand: true
-  mentions: true
-  player_info: true
+  tab: false
+  name_tags: false
+  private_messages: false
+  roleplay: false
+  server_messages: false
+  locale_advancements: false
+  locale_deaths: false
+  scoreboard: false
+  server_brand: false
+  mentions: false
+  player_info: false
   emoji: true
   chat_bubbles: true
-  bed_messages: true
-  afk: true
-  book_formatting: true
-  sign_formatting: true
-  item_formatting: true
-  auto_messages: true
+  bed_messages: false
+  afk: false
+  book_formatting: false
+  sign_formatting: false
+  item_formatting: false
+  auto_messages: false
 
