@@ -41,9 +41,9 @@ compression-threshold = 256
 compression-level = -1
 login-ratelimit = 3000
 connection-timeout = 5000
-# If enabling nginx or gobetween to forward real IPs, enable HAPROXY protocol
-# also need to switch port like 25500 docker -> 25565 nginx
-haproxy-protocol = true
+# On Linux: false (direct port mapping preserves real IPs without proxy)
+# On Windows with gobetween/nginx: set to true
+haproxy-protocol = false
 
 [query]
 # If query is enabled, on what port should the query protocol listen on?

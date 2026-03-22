@@ -10,20 +10,20 @@ jobs:
   deploy:
     name: Deploy to Server
     runs-on: self-hosted
-    # PROD_DIR: set via GitHub secret (Settings → Secrets), falls back to default Windows path
     env:
-      PROD_DIR: ${{ secrets.PROD_DIR || '/d/Repos/NettyanMC' }}
+      PROD_DIR: ${{ vars.PROD_DIR || '/home/agicraft/agicraftmc' }}
     if: "github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]')"
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 2  # needed to diff HEAD^ HEAD
 
       # On Windows: puts Git Bash before WSL in PATH so 'shell: bash' uses Git Bash.
-      # On Linux: this step does nothing (path doesn't exist, no-op).
+      # On Linux: this step is skipped.
       - name: Ensure Git Bash takes priority over WSL
+        if: runner.os == 'Windows'
         shell: powershell
         run: |
           $gitBash = "C:\Program Files\Git\usr\bin"
@@ -88,7 +88,7 @@ jobs:
       - name: Sync files to production
         shell: bash
         run: |
-          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          PROD_DIR="${PROD_DIR:-/home/agicraft/agicraftmc}"
           echo "======================================"
           echo "Syncing to: $PROD_DIR"
           echo "======================================"
@@ -108,7 +108,7 @@ jobs:
       - name: Build services
         shell: bash
         run: |
-          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          PROD_DIR="${PROD_DIR:-/home/agicraft/agicraftmc}"
           cd "$PROD_DIR"
 
           BUILD="${{ steps.changes.outputs.build }}"
@@ -129,7 +129,7 @@ jobs:
       - name: Restart services
         shell: bash
         run: |
-          PROD_DIR="${PROD_DIR:-/d/Repos/NettyanMC}"
+          PROD_DIR="${PROD_DIR:-/home/agicraft/agicraftmc}"
           cd "$PROD_DIR"
 
           RESTART="${{ steps.changes.outputs.restart }}"
