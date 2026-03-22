@@ -130,12 +130,15 @@ jobs:
           for srv in $MC_SERVERS; do
             if [ -d "$srv/config" ]; then
               mkdir -p "$PROD_DIR/$srv/data"
-              cp -rf $srv/config/* "$PROD_DIR/$srv/data/" 2>/dev/null || true
+              echo "  copying $srv/config/* -> $PROD_DIR/$srv/data/"
+              ls -la "$srv/config/" | head -5
+              ls -la "$PROD_DIR/$srv/data/" | head -5
+              cp -rfv $srv/config/* "$PROD_DIR/$srv/data/"
               echo "  synced: $srv/config -> $srv/data"
             fi
             if [ -d "$srv/plugins" ]; then
               mkdir -p "$PROD_DIR/$srv/data/plugins"
-              cp -rf $srv/plugins/* "$PROD_DIR/$srv/data/plugins/" 2>/dev/null || true
+              cp -rfv $srv/plugins/* "$PROD_DIR/$srv/data/plugins/"
               echo "  synced: $srv/plugins -> $srv/data/plugins"
             fi
           done
