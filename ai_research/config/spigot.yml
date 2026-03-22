@@ -174,7 +174,7 @@ settings:
     attackDamage:
       max: 2048.0
   moved-wrongly-threshold: 0.0625
-  bungeecord: true
+  bungeecord: false
 config-version: 12
 stats:
   disable-saving: false

@@ -6,13 +6,10 @@ show-max-players = 5090
 online-mode = false
 # For online mode checking client brand
 force-key-authentication = false
-# Legacy mode (easy, only need bungeecord=true in spigot yml)
-player-info-forwarding-mode = "legacy"
-
 # Modern forward mode (more secure, need to specify keys in paper-global.yml)
 # https://docs.papermc.io/velocity/player-information-forwarding/
-# player-info-forwarding-mode = "modern"
-# forwarding-secret-file = "forwarding.secret"
+player-info-forwarding-mode = "modern"
+forwarding-secret-file = "forwarding.secret"
 
 [servers]
 # network_mode: host — connect via localhost ports bound on 127.0.0.1
