@@ -14,6 +14,7 @@ forwarding-secret-file = "forwarding.secret"
 [servers]
 # network_mode: host — connect via localhost ports bound on 127.0.0.1
 agents = "127.0.0.1:25576"
+clown = "127.0.0.1:25576"
 nanolimbo= "127.0.0.1:25579"
 lobby = "127.0.0.1:25575"
 survival = "127.0.0.1:25571"
@@ -22,7 +23,7 @@ private = "127.0.0.1:25574"
 # survival_plus = "127.0.0.1:25573"  # Coming soon
 
 # Main default server for new players
-default = "agents"
+default = "clown"
 
 # Global fallback server
 fallback = "nanolimbo"
@@ -31,6 +32,7 @@ fallback = "nanolimbo"
 try = ["default", "nanolimbo", "lobby", "survival"]
 
 [forced-hosts]
+"agicraft.ru" = ["agents", "nanolimbo"]
 "agents.agicraft.ru" = ["agents", "nanolimbo"]
 "survival.agicraft.ru" = ["survival", "nanolimbo"]
 "limbo.agicraft.ru" = ["nanolimbo"]
