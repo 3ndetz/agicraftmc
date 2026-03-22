@@ -173,7 +173,7 @@ services:
       SYNC_SKIP_NEWER_IN_DESTINATION: "true"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
-      WORLD: /worlds/world
+      # WORLD: /worlds/world
     ports:
       - "127.0.0.1:25574:25574"  # Server port (localhost only, velocity connects here)
       - "127.0.0.1:25584:25584"  # RCON port (localhost only)
