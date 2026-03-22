@@ -33,6 +33,7 @@ try = ["default", "nanolimbo", "lobby", "survival"]
 
 [forced-hosts]
 "agicraft.ru" = ["agents", "nanolimbo"]
+"mc.agicraft.ru" = ["agents", "nanolimbo"]
 "agents.agicraft.ru" = ["agents", "nanolimbo"]
 "survival.agicraft.ru" = ["survival", "nanolimbo"]
 "limbo.agicraft.ru" = ["nanolimbo"]
