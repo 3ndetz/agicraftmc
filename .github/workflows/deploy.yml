@@ -85,6 +85,12 @@ jobs:
           echo "Services to restart: '$RESTART'"
           echo "Services to build:   '$BUILD'"
 
+      - name: Ensure shared networks exist
+        shell: bash
+        run: |
+          docker network inspect minecraft_network >/dev/null 2>&1 || docker network create minecraft_network
+          docker network inspect nettyan_ssl >/dev/null 2>&1 || docker network create nettyan_ssl
+
       - name: Sync files to production
         shell: bash
         run: |

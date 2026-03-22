@@ -408,7 +408,7 @@ services:
 
 networks:
   mc:
-    driver: bridge
+    external: true
     name: minecraft_network
   nettyan_ssl:
     external: true
