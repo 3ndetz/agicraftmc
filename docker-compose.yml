@@ -124,8 +124,12 @@ services:
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
+      # was in expose
       - "127.0.0.1:25576:25576"  # Server port (localhost only, velocity connects here)
       - "127.0.0.1:25586:25586"  # RCON port (localhost only)
+      # voice chat port need to be different for different servers because of host forwarding
+      - "127.0.0.1:24454:24454/udp"  # Voice chat (localhost only, velocity proxies it)
+      # was in ports
       - "25610:25610"             # BlueMap webserver port (public)
     volumes:
       - ./agents/data:/data
@@ -177,6 +181,7 @@ services:
     ports:
       - "127.0.0.1:25574:25574"  # Server port (localhost only, velocity connects here)
       - "127.0.0.1:25584:25584"  # RCON port (localhost only)
+      - "127.0.0.1:24455:24455/udp"  # Voice chat (localhost only, velocity proxies it)
     volumes:
       - ./private/data:/data
       - ./plugins-common:/plugins-common:ro
