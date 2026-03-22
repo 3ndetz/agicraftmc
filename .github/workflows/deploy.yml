@@ -12,6 +12,7 @@ jobs:
     runs-on: self-hosted
     env:
       PROD_DIR: ${{ vars.PROD_DIR || '/home/agicraft/agicraftmc' }}
+      MC_SERVERS: "agents private"
     if: "github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]')"
 
     steps:
@@ -61,8 +62,9 @@ jobs:
           RESTART=""
           BUILD=""
 
-          echo "$CHANGED" | grep -q "^agents/"   && RESTART="$RESTART agents"
-          echo "$CHANGED" | grep -q "^private/"   && RESTART="$RESTART private"
+          for srv in $MC_SERVERS; do
+            echo "$CHANGED" | grep -q "^$srv/" && RESTART="$RESTART $srv"
+          done
           echo "$CHANGED" | grep -q "^velocity/"       && RESTART="$RESTART velocity"
           echo "$CHANGED" | grep -q "^lobby/"          && RESTART="$RESTART lobby"
           echo "$CHANGED" | grep -q "^limbo/"          && RESTART="$RESTART limbo"
@@ -92,6 +94,18 @@ jobs:
           docker network inspect minecraft_network >/dev/null 2>&1 || docker network create minecraft_network
           docker network inspect nettyan_ssl >/dev/null 2>&1 || docker network create nettyan_ssl
 
+      - name: Stop services before sync
+        shell: bash
+        run: |
+          PROD_DIR="${PROD_DIR:-/home/agicraft/agicraftmc}"
+          RESTART="${{ steps.changes.outputs.restart }}"
+          cd "$PROD_DIR" 2>/dev/null || exit 0
+          if [ "$RESTART" = "all" ]; then
+            docker compose stop 2>/dev/null || true
+          elif [ -n "$RESTART" ]; then
+            docker compose stop $RESTART 2>/dev/null || true
+          fi
+
       - name: Sync files to production
         shell: bash
         run: |
@@ -103,12 +117,26 @@ jobs:
           mkdir -p "$PROD_DIR"
 
           for item in gobetween.toml docker-compose.yml .github \
-                      velocity survival lobby limbo agents private \
+                      velocity survival lobby limbo \
                       agicraft_backend agicraft_frontend survival_plus plugins-common \
                       backup scripts postgres; do
             if [ -e "$item" ]; then
               cp -rf "$item" "$PROD_DIR/"
               echo "  synced: $item"
+            fi
+          done
+
+          # MC servers: sync config and plugins directly into data
+          for srv in $MC_SERVERS; do
+            if [ -d "$srv/config" ]; then
+              mkdir -p "$PROD_DIR/$srv/data"
+              cp -rf $srv/config/* "$PROD_DIR/$srv/data/" 2>/dev/null || true
+              echo "  synced: $srv/config -> $srv/data"
+            fi
+            if [ -d "$srv/plugins" ]; then
+              mkdir -p "$PROD_DIR/$srv/data/plugins"
+              cp -rf $srv/plugins/* "$PROD_DIR/$srv/data/plugins/" 2>/dev/null || true
+              echo "  synced: $srv/plugins -> $srv/data/plugins"
             fi
           done
 

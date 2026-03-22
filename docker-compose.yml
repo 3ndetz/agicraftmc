@@ -123,20 +123,13 @@ services:
       SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
-      WORLD: /worlds/world
     ports:
       - "127.0.0.1:25576:25576"  # Server port (localhost only, velocity connects here)
       - "127.0.0.1:25586:25586"  # RCON port (localhost only)
       - "25610:25610"             # BlueMap webserver port (public)
     volumes:
       - ./agents/data:/data
-      - ./agents/worlds:/worlds
-      # For example, reference a shared directory used by several projects
       - ./plugins-common:/plugins-common:ro
-      # and add plugins unique to this project
-      - ./agents/plugins:/plugins-local:ro
-      # Configs from Git (read-only)
-      - ./agents/config:/config:ro
     networks:
       - mc
       - nettyan_ssl
@@ -186,13 +179,7 @@ services:
       - "127.0.0.1:25584:25584"  # RCON port (localhost only)
     volumes:
       - ./private/data:/data
-      - ./private/worlds:/worlds
-      # For example, reference a shared directory used by several projects
       - ./plugins-common:/plugins-common:ro
-      # and add plugins unique to this project
-      - ./private/plugins:/plugins-local:ro
-      # Configs from Git (read-only)
-      - ./private/config:/config:ro
     networks:
       - mc
       - nettyan_ssl
