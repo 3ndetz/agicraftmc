@@ -144,13 +144,68 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: mc-monitor --use-rcon
+      test: mc-health
       start_period: 5m
       interval: 30s
       retries: 6
     stdin_open: true
     tty: true
 
+  private:
+    image: itzg/minecraft-server
+    container_name: minecraft_private
+    restart: unless-stopped
+    environment:
+      TYPE: PAPER
+      VERSION: 1.21.11
+      COPY_PLUGINS_SRC: /plugins-common,/plugins-local
+      
+      # Standart memory settings. DISABLE if using AIKAR setup
+      MAX_MEMORY: 6G
+      MIN_MEMORY: 1G
+      JVM_OPTS: "-XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled"
+      
+      # AIKAR SETUP for BIG servers and 10G+ RAM
+      # but will get ALL memory in use and some plugins may have issues
+      # MEMORY: ${AI_RESEARCH_MEMORY:-8G}
+      # USE_AIKAR_FLAGS: "TRUE"
+      
+      EULA: "TRUE"
+      ONLINE_MODE: "FALSE"
+      SERVER_PORT: 25574
+      RCON_PASSWORD: ${RCON_PASSWORD:-StrongPass123!}
+      RCON_PORT: 25584
+      ENABLE_RCON: "TRUE"
+      # Config sync settings
+      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      COPY_CONFIG_DEST: /data
+      REPLACE_ENV_DURING_SYNC: "true"
+      WORLD: /worlds/world
+    ports:
+      - "127.0.0.1:25574:25574"  # Server port (localhost only, velocity connects here)
+      - "127.0.0.1:25584:25584"  # RCON port (localhost only)
+    volumes:
+      - ./private/data:/data
+      - ./private/worlds:/worlds
+      # For example, reference a shared directory used by several projects
+      - ./plugins-common:/plugins-common:ro
+      # and add plugins unique to this project
+      - ./private/plugins:/plugins-local:ro
+      # Configs from Git (read-only)
+      - ./private/config:/config:ro
+    networks:
+      - mc
+      - nettyan_ssl
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: mc-health
+      start_period: 5m
+      interval: 30s
+      retries: 6
+    stdin_open: true
+    tty: true
 
 
 ## DISABLED NON-READY SERVERS SECTION

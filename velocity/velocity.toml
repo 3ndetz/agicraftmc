@@ -18,6 +18,7 @@ nanolimbo= "127.0.0.1:25579"
 lobby = "127.0.0.1:25575"
 survival = "127.0.0.1:25571"
 limbo = "127.0.0.1:25578"
+private = "127.0.0.1:25574"
 # survival_plus = "127.0.0.1:25573"  # Coming soon
 
 # Main default server for new players
@@ -30,9 +31,10 @@ fallback = "nanolimbo"
 try = ["default", "nanolimbo", "lobby", "survival"]
 
 [forced-hosts]
-"research.nettyan.ru" = ["airesearch", "nanolimbo"]
-"survival.nettyan.ru" = ["survival", "nanolimbo"]
-"limbo.nettyan.ru" = ["nanolimbo"]
+"research.agicraft.ru" = ["airesearch", "nanolimbo"]
+"survival.agicraft.ru" = ["survival", "nanolimbo"]
+"limbo.agicraft.ru" = ["nanolimbo"]
+"private.agicraft.ru" = ["private", "nanolimbo"]
 
 [advanced]
 compression-threshold = 256

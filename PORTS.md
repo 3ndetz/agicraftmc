@@ -19,6 +19,7 @@
 | 0 | airesearch (основной) | 25570 | 25580 |
 | 1 | survival | 25571 | — |
 | 3 | survivalplus | 25573 | — |
+| 4 | private | 25574 | — |
 | 5 | lobby | 25575 | — |
 | 7 | voice proxy (UDP) | 25577 | — |
 | 8 | limbo | 25578 | — |
