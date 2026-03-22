@@ -15,15 +15,16 @@ player-info-forwarding-mode = "legacy"
 # forwarding-secret-file = "forwarding.secret"
 
 [servers]
-airesearch = "airesearch:25570"
-nanolimbo= "localhost:25579"
-lobby = "lobby:25575"
-survival = "survival:25571"
-limbo = "limbo:25578"
-# survival_plus = "survivalplus:25565"  # Coming soon
+# network_mode: host — connect via localhost ports bound on 127.0.0.1
+airesearch = "127.0.0.1:25570"
+nanolimbo= "127.0.0.1:25579"
+lobby = "127.0.0.1:25575"
+survival = "127.0.0.1:25571"
+limbo = "127.0.0.1:25578"
+# survival_plus = "127.0.0.1:25573"  # Coming soon
 
 # Main default server for new players
-default = "airesearch:25570"
+default = "airesearch"
 
 # Global fallback server
 fallback = "nanolimbo"

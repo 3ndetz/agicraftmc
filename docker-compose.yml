@@ -60,6 +60,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-minecraft_server}
       POSTGRES_USER: ${POSTGRES_USER:-mcserver}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-StrongPass123!}
+    ports:
+      - "127.0.0.1:5432:5432"  # localhost only (for velocity plugins)
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -77,20 +79,14 @@ services:
     build: ./velocity
     container_name: minecraft_velocity
     restart: unless-stopped
-    ports:
-      # Minecraft Java port (direct on Linux, no gobetween/nginx needed)
-      - "25565:25565"
-      - "25565:25565/udp"
-      # Bedrock port
-      - "19132:19132/udp"
-      # Voice chat port
-      - "24454:24454/udp"
-      # Voice chat proxy port
-      - "25577:25577/udp"
+    network_mode: host
+    # Ports bound directly on host (no NAT = real player IPs visible):
+    # 25565 TCP/UDP - Minecraft Java
+    # 19132 UDP - Bedrock
+    # 24454 UDP - Voice chat
+    # 25577 UDP - Voice chat proxy
     volumes:
       - ./velocity:/server
-    networks:
-      - mc
     depends_on:
       postgres:
         condition: service_healthy
@@ -129,11 +125,9 @@ services:
       REPLACE_ENV_DURING_SYNC: "true"
       WORLD: /worlds/world
     ports:
-      - "25610:25610"  # BlueMap webserver port
-    expose:
-      - "25570"  # Server port
-      - "25580"  # RCON port
-      - "24454/udp"  # VoiceChatPort
+      - "127.0.0.1:25570:25570"  # Server port (localhost only, velocity connects here)
+      - "127.0.0.1:25580:25580"  # RCON port (localhost only)
+      - "25610:25610"             # BlueMap webserver port (public)
     volumes:
       - ./ai_research/data:/data
       - ./ai_research/worlds:/worlds
@@ -174,7 +168,7 @@ services:
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
-      - "25575:25565"
+      - "127.0.0.1:25575:25565"  # localhost only
     volumes:
       - lobby_data:/data                       # Persistent data (JAR, worlds, userdata)
       - ./lobby/config:/config:ro              # Configs from Git (read-only)
@@ -204,7 +198,7 @@ services:
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
-      - "25573:25565"  # Direct access for Survival+
+      - "127.0.0.1:25573:25565"  # localhost only
     volumes:
       - survivalplus_data:/data                # Persistent data (JAR, worlds, userdata)
       - ./survival_plus/config:/config:ro      # Configs from Git (read-only)
@@ -222,8 +216,8 @@ services:
     build: ./limbo
     container_name: minecraft_limbo
     restart: unless-stopped
-    expose:
-      - "25578"
+    ports:
+      - "127.0.0.1:25578:25578"  # localhost only
     volumes:
       - ./limbo:/server
     networks:
@@ -257,7 +251,7 @@ services:
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
-      - "25571:25565"
+      - "127.0.0.1:25571:25565"  # localhost only
     volumes:
       - survival_data:/data                    # Persistent data (JAR, worlds, userdata)
       - ./survival/config:/config:ro           # Configs from Git (read-only)
