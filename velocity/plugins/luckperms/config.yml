@@ -3,7 +3,7 @@ include-global: true
 use-server-uuid-cache: true
 storage-method: postgresql
 data:
-  address: postgres:5432
+  address: 127.0.0.1:5432
   database: minecraft_server
   username: mcserver
   password: 'StrongPass123!'

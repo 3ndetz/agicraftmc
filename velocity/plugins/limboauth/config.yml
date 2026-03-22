@@ -300,7 +300,7 @@ database:
   # Database type: mariadb, mysql, postgresql, sqlite or h2.
   storage-type: postgresql
   # Settings for Network-based database (like MySQL, PostgreSQL): 
-  hostname: "postgres:5432"
+  hostname: "127.0.0.1:5432"
   user: "mcserver"
   password: "StrongPass123!"
   database: "minecraft_server"
