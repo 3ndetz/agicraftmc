@@ -120,7 +120,7 @@ services:
       RCON_PORT: 25580
       ENABLE_RCON: "TRUE"
       # Config sync settings
-      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
       WORLD: /worlds/world
@@ -169,7 +169,7 @@ services:
       SERVER_PORT: 25565
       USE_AIKAR_FLAGS: "TRUE"
       # Config sync settings
-      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
@@ -199,7 +199,7 @@ services:
       SERVER_PORT: 25565
       USE_AIKAR_FLAGS: "TRUE"
       # Config sync settings
-      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:
@@ -252,7 +252,7 @@ services:
       SERVER_PORT: 25565
       USE_AIKAR_FLAGS: "TRUE"
       # Config sync settings
-      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       COPY_CONFIG_DEST: /data
       REPLACE_ENV_DURING_SYNC: "true"
     ports:

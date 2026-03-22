@@ -142,10 +142,10 @@ jobs:
 
           if [ "$RESTART" = "all" ]; then
             echo "Full restart..."
-            docker compose up -d --remove-orphans
+            docker compose up -d --remove-orphans --force-recreate --build
           elif [ -n "$RESTART" ]; then
             echo "Restarting:$RESTART"
-            docker compose up -d --remove-orphans $RESTART
+            docker compose up -d --remove-orphans --force-recreate --build $RESTART
           else
             echo "No services need restart"
           fi
