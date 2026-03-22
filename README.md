@@ -15,7 +15,7 @@ TODO - ПОРТЫ И СЕРВИСЫ ОБНОВИЛИСЬ, И ДОКА ТОЖЕ, 
 Velocity Proxy (25565)
     ├─> Lobby (25569) - Точка входа с авторизацией
     ├─> Survival (25571) - Классический выживание
-    ├─> AI Research (25570) - Сервер для AI ботов
+    ├─> Agents (25576) - Сервер для AI ботов
     └─> Survival+ (25572) - В разработке
 
 PostgreSQL (5432) - Единая БД
@@ -106,7 +106,7 @@ NetTyanMC/
 │   └── config/          # Конфиги плагинов (AuthMe, LuckPerms, и т.д.)
 ├── survival/            # Survival сервер (itzg/minecraft-server)
 │   └── config/          # Конфиги плагинов
-├── ai_research/         # AI Research сервер (itzg/minecraft-server)
+├── agents/         # AI Research сервер (itzg/minecraft-server)
 │   └── config/
 ├── velocity/            # Velocity прокси (itzg/minecraft-server)
 │   └── config/

@@ -4,18 +4,18 @@
 
 | Система | Что | Где |
 | --- | --- | --- |
-| **Git** | Скрипты, статичные конфиги плагинов | `ai_research/config/`, репозиторий |
+| **Git** | Скрипты, статичные конфиги плагинов | `agents/config/`, репозиторий |
 | **Backup-скрипт** | Всё остальное живое (миры, динамика плагинов, JAR) | `./backups/` |
 
-## Что бэкапится (airesearch)
+## Что бэкапится (agents)
 
 ```text
-ai_research/data/world/        ← живой мир
-ai_research/data/plugins/      ← динамика: регионы WorldGuard, данные плагинов
+agents/data/world/        ← живой мир
+agents/data/plugins/      ← динамика: регионы WorldGuard, данные плагинов
 ```
 
-> `ai_research/config/` — Git, не бэкапится скриптом.
-> `ai_research/worlds/` — сюда можно скопировать чистый мир при инициализации. Отдельно не бэкапится.
+> `agents/config/` — Git, не бэкапится скриптом.
+> `agents/worlds/` — сюда можно скопировать чистый мир при инициализации. Отдельно не бэкапится.
 
 ## Политика ротации
 
@@ -32,7 +32,7 @@ ai_research/data/plugins/      ← динамика: регионы WorldGuard, 
 
 ```text
 backups/
-  airesearch/
+  agents/
     daily-yesterday.tar.gz
     daily-prev.tar.gz
     weekly-2025-03-03.tar.gz
@@ -55,7 +55,7 @@ postgres-backup.sql  ← дамп всей БД
 ### 1. Выбрать нужный архив
 
 ```bash
-ls backups/airesearch/
+ls backups/agents/
 # daily-2025-03-08.tar.gz
 # daily-2025-03-09.tar.gz
 # weekly-2025-03-03.tar.gz
@@ -65,23 +65,23 @@ ls backups/airesearch/
 ### 2. Остановить сервер
 
 ```bash
-docker compose stop airesearch
+docker compose stop agents
 ```
 
 ### 3. Восстановить файлы мира и плагинов
 
 ```bash
 # Распаковать всё, кроме postgres дампа, прямо в data/
-tar -xzf backups/airesearch/daily-2025-03-09.tar.gz \
+tar -xzf backups/agents/daily-2025-03-09.tar.gz \
     --exclude='postgres-backup.sql' \
-    -C ./ai_research/data/
+    -C ./agents/data/
 ```
 
 ### 4. Восстановить PostgreSQL
 
 ```bash
 # Извлечь postgres-backup.sql из архива и подать напрямую в psql
-tar -xzf backups/airesearch/daily-2025-03-09.tar.gz \
+tar -xzf backups/agents/daily-2025-03-09.tar.gz \
     postgres-backup.sql -O | \
     docker exec -i minecraft_postgres psql \
         -U mcserver -d minecraft_server
@@ -90,7 +90,7 @@ tar -xzf backups/airesearch/daily-2025-03-09.tar.gz \
 ### 5. Запустить сервер
 
 ```bash
-docker compose start airesearch
+docker compose start agents
 ```
 
 ## Raw
@@ -108,4 +108,4 @@ docker compose start airesearch
 Резервные копии создаются 1 раз в день (но можно запустить и по требованию). Всего хранится 3 копии, 1 месяц назад, 1 неделю назад, позавчерашняя и вчерашняя. Как ты понимаешь, позавчерашняя и вчерашняя постоянно перезаписываются, остаются только недельные и месячные чекпоинты. Всё что старее - удаляется автоматикой.
 К копиям должно быть легко получить доступ, чтобы у них была понятная файловая структура. Но не в ущерб месту - если их можно сжать, пусть хранятся сжатыми, главное, чтобы легко было достать.
 
-Копии затрагивают только airesearch сервер на данный момент.
+Копии затрагивают только agents сервер на данный момент.

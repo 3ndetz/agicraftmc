@@ -16,7 +16,7 @@
 
 | ID | Сервер | Игровой порт | RCON порт |
 | --- | --- | --- | --- |
-| 0 | airesearch (основной) | 25570 | 25580 |
+| 6 | agents (основной) | 25576 | 25586 |
 | 1 | survival | 25571 | — |
 | 3 | survivalplus | 25573 | — |
 | 4 | private | 25574 | — |
@@ -26,7 +26,7 @@
 | 9 | nanolimbo | 25579 | — |
 
 > **RCON правило:** `RCON_PORT = SERVER_PORT + 10`
-> Пример: airesearch SERVER_PORT=25570 → RCON_PORT=25580
+> Пример: agents SERVER_PORT=25576 → RCON_PORT=25586
 
 ### Proxy / Docker host mapping
 
@@ -46,15 +46,15 @@ Velocity внутри контейнера слушает стандартный
 | Порт | Протокол | Сервис | Назначение |
 | --- | --- | --- | --- |
 | 25565 | TCP | Velocity (internal) | Стандартный Minecraft Java порт внутри контейнера |
-| 25570 | TCP | airesearch | Игровой порт основного сервера |
+| 25576 | TCP | agents | Игровой порт основного сервера |
 | 25571 | TCP | survival | Игровой порт survival-сервера |
 | 25573 | TCP | survivalplus | Игровой порт survival+-сервера |
 | 25575 | TCP | lobby | Игровой порт лобби-сервера |
 | 25577 | UDP | Velocity | Plasmo Voice Chat proxy порт |
 | 25578 | TCP | limbo | Игровой порт limbo-сервера |
 | 25579 | TCP | nanolimbo | Игровой порт nanolimbo-сервера |
-| 25580 | TCP | airesearch | RCON порт (=25570+10) |
-| 24454 | UDP | airesearch/Velocity | Plasmo Voice Chat (плагин) |
+| 25586 | TCP | agents | RCON порт (=25576+10) |
+| 24454 | UDP | agents/Velocity | Plasmo Voice Chat (плагин) |
 | 5432 | TCP | postgres | PostgreSQL база данных |
 | 3000 | TCP | backend | Express.js API |
 | 80 | TCP | frontend | React frontend (Nginx внутри) |
@@ -72,7 +72,7 @@ Velocity внутри контейнера слушает стандартный
 | `25571:25565` | TCP | survival | Прямой доступ к серверу (debug/тест) |
 | `25573:25565` | TCP | survivalplus | Прямой доступ к серверу (debug/тест) |
 | `25575:25565` | TCP | lobby | Прямой доступ к серверу (debug/тест) |
-| `25610:25610` | TCP | airesearch | BlueMap веб-карта |
+| `25610:25610` | TCP | agents | BlueMap веб-карта |
 
 ### Веб-панели и утилиты (внешние)
 
@@ -105,7 +105,7 @@ Velocity внутри контейнера слушает стандартный
 Игрок (Java)
   → WAN:25565 → gobetween:25565 (HAProxy protocol)
     → host:25500 → Docker Velocity:25565
-      → airesearch:25570 / survival:25571 / lobby:25575 / ...
+      → agents:25576 / survival:25571 / lobby:25575 / ...
 
 Игрок (Bedrock)
   → WAN:19132 → gobetween:19132
@@ -119,7 +119,7 @@ Voice Chat
   → WAN:443 → Caddy (nettyanweb) → frontend:80 / backend:3000
 
 Карта
-  → WAN:25610 → Docker airesearch:25610 (BlueMap)
+  → WAN:25610 → Docker agents:25610 (BlueMap)
 
 Файлы (admin)
   → WAN:8090 → Docker filebrowser:80
@@ -131,7 +131,7 @@ Voice Chat
 
 ```toml
 [servers]
-airesearch = "airesearch:25570"   # основной, default
+agents = "agents:25576"   # основной, default
 nanolimbo  = "localhost:25579"    # fallback
 lobby      = "lobby:25575"
 survival   = "survival:25571"
@@ -146,8 +146,8 @@ limbo      = "limbo:25578"
 | --- | --- |
 | `docker-compose.yml` | Все Docker порты |
 | `velocity/velocity.toml` | Роутинг Velocity → серверы |
-| `ai_research/config/plugins/BlueMap/webserver.conf` | BlueMap port 25610 |
+| `agents/config/plugins/BlueMap/webserver.conf` | BlueMap port 25610 |
 | `backend/src/server.js` | Backend port 3000 |
 | `backend/.env.example` | POSTGRES_PORT=5432 |
 | `gobetween.toml` | Внешний LB порты 25565/19132 |
-| `caddyfile.example` | HTTPS 80/443 + RCON 25580 |
+| `caddyfile.example` | HTTPS 80/443 + RCON 25586 |

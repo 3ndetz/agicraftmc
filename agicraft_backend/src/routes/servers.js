@@ -137,11 +137,11 @@ router.get('/status', async (req, res) => {
       port: 25565,
     },
     {
-      id: 'airesearch',
-      name: 'AI Research',
-      host: process.env.MINECRAFT_HOST || 'airesearch',
+      id: 'agents',
+      name: 'Agents',
+      host: process.env.MINECRAFT_HOST || 'agents',
       pingHost: null,
-      port: parseInt(process.env.MINECRAFT_PORT || '25570'),
+      port: parseInt(process.env.MINECRAFT_PORT || '25576'),
     },
   ];
 

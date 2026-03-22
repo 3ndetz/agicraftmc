@@ -38,7 +38,7 @@ check_service "Frontend" "agicraft_frontend" "curl -sf http://localhost:80"
 check_service "Velocity" "minecraft_velocity" "docker exec minecraft_velocity ps aux | grep -q java"
 check_service "Survival" "minecraft_survival" "docker exec minecraft_survival ps aux | grep -q java"
 check_service "Lobby" "minecraft_lobby" "docker exec minecraft_lobby ps aux | grep -q java"
-check_service "AI Research" "minecraft_airesearch" "docker exec minecraft_airesearch ps aux | grep -q java"
+check_service "Agents" "minecraft_agents" "docker exec minecraft_agents ps aux | grep -q java"
 
 echo ""
 echo "Docker Resources:"

@@ -9,7 +9,7 @@
 - [x] **Реорганизация портов**
   - Velocity: 25565 (стандартный Minecraft порт)
   - Lobby: 25569 (внутренний)
-  - AI Research: 25570 (прямой доступ)
+  - Agents: 25576 (прямой доступ)
   - Survival: 25571 (внутренний)
   - Survival+: 25572 (заглушка)
   - Backend API: 3000
@@ -36,7 +36,7 @@
   - TYPE=PAPER, VERSION=1.21.1
   - LuckPerms с PostgreSQL
   - **AuthMe авторизация** (перенесена с Survival)
-    - Bypass для AI групп (ai_research, ai_person, netfather)
+    - Bypass для AI групп (agents, ai_person, netfather)
     - Игроки остаются на Lobby после авторизации
   - Конфигурация защиты (gamemode adventure, pvp off)
   - Документация LOBBY_SETUP.md с инструкциями по:
@@ -52,7 +52,7 @@
 
 - [x] **AI Research сервер (itzg/minecraft-server)**
   - TYPE=PAPER, VERSION=1.21.1, MEMORY=10G
-  - Прямой доступ на порту 25570
+  - Прямой доступ на порту 25576
   - Защита Нижнего мира (50x50 блоков)
   - End - полная анархия (без защиты)
   - Документация AI_RESEARCH_SETUP.md
@@ -70,7 +70,7 @@
 
 - [x] **LuckPerms полная настройка**
   - 8 донатных групп (default → new → helper → starter → vip → premium → elite → legend)
-  - 3 служебные группы (ai_research, ai_person, netfather)
+  - 3 служебные группы (agents, ai_person, netfather)
   - Полная документация с командами (LUCKPERMS_SETUP.md)
   - Права для каждой группы
   - Meta для ai_person (velocity.default-server)
@@ -203,7 +203,7 @@
 ### Плагины
 
 - [ ] **Скачать плагины вручную:**
-  - Paper 1.21.1 (`lobby/paper.jar`, `survival/paper.jar`, `ai_research/paper.jar`)
+  - Paper 1.21.1 (`lobby/paper.jar`, `survival/paper.jar`, `agents/paper.jar`)
   - Velocity 3.4.0+ (`velocity/velocity.jar`)
   - DecentHolograms (`lobby/plugins/`)
   - FancyNpcs (`lobby/plugins/`)
@@ -243,7 +243,7 @@
 - [ ] **Тесты Backend:**
   - [ ] Регистрация пользователя
   - [ ] Вход и получение JWT токена
-  - [ ] Создание бота (с ролью ai_research)
+  - [ ] Создание бота (с ролью agents)
   - [ ] Запуск бота
   - [ ] Просмотр логов бота
   - [ ] Создание платежа YooKassa
@@ -329,7 +329,7 @@
 - postgres
 - velocity
 - survival
-- airesearch
+- agents
 - lobby
 - backend
 - frontend

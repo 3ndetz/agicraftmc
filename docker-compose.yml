@@ -7,7 +7,7 @@ services:
   # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
   # filebrowser:
 
-  # Backup — daily tar.gz snapshots of airesearch data with rotation
+  # Backup — daily tar.gz snapshots of agents data with rotation
   # Logs: docker logs mc_backup
   # Manual run: docker exec mc_backup /usr/local/bin/backup.sh
   mc-backup:
@@ -21,7 +21,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-mcserver}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-StrongPass123!}
     volumes:
-      - ./ai_research/data:/source:ro     # backup source (read-only)
+      - ./agents/data:/source:ro     # backup source (read-only)
       - ./backups:/backups              # backups stored as real folder on disk
     networks:
       - mc
@@ -94,9 +94,9 @@ services:
     tty: true
 
 ## MAIN TARGET SERVER FOR NOW
-  airesearch:
+  agents:
     image: itzg/minecraft-server
-    container_name: minecraft_airesearch
+    container_name: minecraft_agents
     restart: unless-stopped
     environment:
       TYPE: PAPER
@@ -115,9 +115,9 @@ services:
       
       EULA: "TRUE"
       ONLINE_MODE: "FALSE"
-      SERVER_PORT: 25570
+      SERVER_PORT: 25576
       RCON_PASSWORD: ${RCON_PASSWORD:-StrongPass123!}
-      RCON_PORT: 25580
+      RCON_PORT: 25586
       ENABLE_RCON: "TRUE"
       # Config sync settings
       SYNC_SKIP_NEWER_IN_DESTINATION: "false"
@@ -125,18 +125,18 @@ services:
       REPLACE_ENV_DURING_SYNC: "true"
       WORLD: /worlds/world
     ports:
-      - "127.0.0.1:25570:25570"  # Server port (localhost only, velocity connects here)
-      - "127.0.0.1:25580:25580"  # RCON port (localhost only)
+      - "127.0.0.1:25576:25576"  # Server port (localhost only, velocity connects here)
+      - "127.0.0.1:25586:25586"  # RCON port (localhost only)
       - "25610:25610"             # BlueMap webserver port (public)
     volumes:
-      - ./ai_research/data:/data
-      - ./ai_research/worlds:/worlds
+      - ./agents/data:/data
+      - ./agents/worlds:/worlds
       # For example, reference a shared directory used by several projects
       - ./plugins-common:/plugins-common:ro
       # and add plugins unique to this project
-      - ./ai_research/plugins:/plugins-local:ro
+      - ./agents/plugins:/plugins-local:ro
       # Configs from Git (read-only)
-      - ./ai_research/config:/config:ro
+      - ./agents/config:/config:ro
     networks:
       - mc
       - nettyan_ssl
@@ -354,8 +354,8 @@ services:
       YOOKASSA_SECRET_KEY: ${YOOKASSA_SECRET_KEY}
       YOOKASSA_RETURN_URL: ${YOOKASSA_RETURN_URL:-http://localhost/payment/success}
       YOOKASSA_WEBHOOK_URL: ${YOOKASSA_WEBHOOK_URL:-http://localhost/api/payment/webhook}
-      MINECRAFT_HOST: airesearch
-      MINECRAFT_PORT: 25570
+      MINECRAFT_HOST: agents
+      MINECRAFT_PORT: 25576
       MINECRAFT_VERSION: 1.21.1
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
@@ -404,8 +404,8 @@ services:
       RWA_PASSWORD: ${RCON_PASSWORD:-StrongPass123!}
       RWA_ADMIN: "TRUE"
       # is referring to the service name 'mc' declared below
-      RWA_RCON_HOST: airesearch
-      RWA_RCON_PORT: 25580
+      RWA_RCON_HOST: agents
+      RWA_RCON_PORT: 25586
       # needs to match the password configured for the container, see RCON_PASSWORD below
       RWA_RCON_PASSWORD: ${RCON_PASSWORD:-StrongPass123!}
       # Указываем, что будем управлять несколькими серверами через JSON конфиг

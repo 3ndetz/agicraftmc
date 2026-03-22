@@ -61,7 +61,7 @@ jobs:
           RESTART=""
           BUILD=""
 
-          echo "$CHANGED" | grep -q "^ai_research/"   && RESTART="$RESTART airesearch"
+          echo "$CHANGED" | grep -q "^agents/"   && RESTART="$RESTART agents"
           echo "$CHANGED" | grep -q "^private/"   && RESTART="$RESTART private"
           echo "$CHANGED" | grep -q "^velocity/"       && RESTART="$RESTART velocity"
           echo "$CHANGED" | grep -q "^lobby/"          && RESTART="$RESTART lobby"
@@ -103,7 +103,7 @@ jobs:
           mkdir -p "$PROD_DIR"
 
           for item in gobetween.toml docker-compose.yml .github \
-                      velocity survival lobby limbo ai_research private \
+                      velocity survival lobby limbo agents private \
                       agicraft_backend agicraft_frontend survival_plus plugins-common \
                       backup scripts postgres; do
             if [ -e "$item" ]; then

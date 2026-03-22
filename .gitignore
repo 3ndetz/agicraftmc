@@ -6,8 +6,8 @@ survival/*
 !survival/config/
 lobby/*
 !lobby/config/
-ai_research/*
-!ai_research/config/
+agents/*
+!agents/config/
 !velocity/*
 !velocity/config/
 
@@ -162,7 +162,7 @@ postgres_data/
 velocity_data/
 survival_data/
 lobby_data/
-airesearch_data/
+agents_data/
 
 # ==========================================
 # LOCAL FILES (not for Git)

@@ -61,7 +61,7 @@ function Home() {
             <span className="server-card-icon">🤖</span>
             <h3>AI Research</h3>
             <p>Экспериментальный сервер для тестирования и исследования ИИ-агентов.</p>
-            <ServerStatus server={getServer('airesearch')} loading={statusLoading} />
+            <ServerStatus server={getServer('agents')} loading={statusLoading} />
           </div>
         </div>
       </section>

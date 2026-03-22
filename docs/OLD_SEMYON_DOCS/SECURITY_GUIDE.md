@@ -143,11 +143,11 @@ sed -i "s/POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$NEW_PASSWORD/" .env
 # 4. Обновить конфиги LuckPerms
 # lobby/config/plugins/LuckPerms/config.yml
 # survival/config/plugins/LuckPerms/config.yml
-# ai_research/config/plugins/LuckPerms/config.yml
+# agents/config/plugins/LuckPerms/config.yml
 # velocity/config/plugins/LuckPerms/config.yml
 
 # 5. Перезапустить серверы
-docker-compose restart velocity survival lobby airesearch
+docker-compose restart velocity survival lobby agents
 ```
 
 ### 2. Изменить JWT Secret
@@ -178,7 +178,7 @@ sed -i "s/RCON_PASSWORD=.*/RCON_PASSWORD=$NEW_RCON/" .env
 # или использовать environment variables если поддерживается
 
 # 4. Перезапустить серверы
-docker-compose restart velocity survival lobby airesearch
+docker-compose restart velocity survival lobby agents
 ```
 
 ---
@@ -200,7 +200,7 @@ sudo ufw allow 22/tcp
 
 # Разрешить Minecraft
 sudo ufw allow 25565/tcp comment 'Minecraft Velocity'
-sudo ufw allow 25570/tcp comment 'Minecraft AI Research (direct)'
+sudo ufw allow 25576/tcp comment 'Minecraft Agents (direct)'
 
 # Разрешить HTTPS (для nettyanweb Caddy)
 sudo ufw allow 80/tcp comment 'HTTP'

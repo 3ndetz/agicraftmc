@@ -33,24 +33,24 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-// Middleware для проверки ai_research роли
+// Middleware для проверки agents роли
 const requireAIAccess = async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Не авторизован' });
   }
 
   try {
-    // Проверяем наличие ai_research роли через LuckPerms
+    // Проверяем наличие agents роли через LuckPerms
     const result = await db.query(`
       SELECT 1 FROM luckperms_user_permissions
       WHERE uuid = (SELECT minecraft_uuid FROM web_users WHERE id = $1)
-      AND permission = 'server.ai_research'
+      AND permission = 'server.agents'
       LIMIT 1
     `, [req.user.id]);
 
     if (result.rows.length === 0) {
       return res.status(403).json({
-        error: 'Доступ запрещён. Требуется роль ai_research'
+        error: 'Доступ запрещён. Требуется роль agents'
       });
     }
 

@@ -54,7 +54,7 @@
   - [ ] 80/tcp (HTTP для Let's Encrypt)
   - [ ] 443/tcp (HTTPS)
   - [ ] 25565/tcp (Minecraft)
-  - [ ] 25570/tcp (AI Research, опционально)
+  - [ ] 25576/tcp (Agents, опционально)
 
 ### Команды для настройки firewall (Ubuntu):
 
@@ -62,7 +62,7 @@
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 sudo ufw allow 25565/tcp
-sudo ufw allow 25570/tcp
+sudo ufw allow 25576/tcp
 sudo ufw enable
 sudo ufw status
 ```
@@ -191,7 +191,7 @@ mc.your-domain.com {
 - [ ] Создана группа `new`
 - [ ] Создана группа `helper`
 - [ ] Создана группа `vip`
-- [ ] Создана группа `ai_research`
+- [ ] Создана группа `agents`
 - [ ] Создана группа `ai_person`
 - [ ] Создана группа `netfather` (админ)
 - [ ] Настроены веса групп
@@ -224,8 +224,8 @@ mc.your-domain.com {
 
 - [ ] Spawn в Нижнем мире защищен (50x50)
 - [ ] End - полная анархия (без защиты)
-- [ ] Права настроены для ai_research / ai_person
-- [ ] AI боты могут подключаться напрямую на порт 25570
+- [ ] Права настроены для agents / ai_person
+- [ ] AI боты могут подключаться напрямую на порт 25576
 
 ---
 
@@ -275,7 +275,7 @@ mc.your-domain.com {
 ### Firewall
 
 - [ ] Firewall включен: `sudo ufw enable`
-- [ ] Открыты только необходимые порты (80, 443, 25565, 25570)
+- [ ] Открыты только необходимые порты (80, 443, 25565, 25576)
 - [ ] SSH порт защищен (опционально изменен с 22)
 - [ ] Включен rate limiting для SSH (опционально)
 

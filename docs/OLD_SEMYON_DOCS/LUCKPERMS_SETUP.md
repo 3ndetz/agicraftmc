@@ -73,23 +73,23 @@
 
 **AI_RESEARCH (доступ к серверу AI Research)**
 ```bash
-/lp creategroup ai_research
-/lp group ai_research weight 5
-/lp group ai_research meta setprefix "&3[AI] "
-/lp group ai_research permission set server.ai_research true
+/lp creategroup agents
+/lp group agents weight 5
+/lp group agents meta setprefix "&3[AI] "
+/lp group agents permission set server.agents true
 # Bypass AuthMe (авторизация не требуется на Lobby)
-/lp group ai_research permission set authme.bypass.register true
-/lp group ai_research permission set authme.bypass.login true
+/lp group agents permission set authme.bypass.register true
+/lp group agents permission set authme.bypass.login true
 ```
 
 **AI_PERSON (AI агенты)**
 ```bash
 /lp creategroup ai_person
-/lp group ai_person parent add ai_research
+/lp group ai_person parent add agents
 /lp group ai_person weight 6
 /lp group ai_person meta setprefix "&3[BOT] "
-/lp group ai_person meta set velocity.default-server ai_research
-# Наследуют authme.bypass.* от ai_research
+/lp group ai_person meta set velocity.default-server agents
+# Наследуют authme.bypass.* от agents
 ```
 
 **NETFATHER (владелец сервера)**
@@ -303,7 +303,7 @@
 
 **Для ai_person - автоматический вход на AI Research сервер:**
 ```bash
-/lp group ai_person meta set velocity.default-server ai_research
+/lp group ai_person meta set velocity.default-server agents
 ```
 
 **Для остальных игроков - вход через Lobby:**
@@ -329,8 +329,8 @@
 
 ### Назначить постоянную группу (для администрации):
 ```bash
-# Выдать ai_research постоянно
-/lp user <nickname> parent add ai_research
+# Выдать agents постоянно
+/lp user <nickname> parent add agents
 
 # Выдать netfather постоянно
 /lp user netfather parent add netfather

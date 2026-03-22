@@ -142,9 +142,9 @@ else
   fi
 
   # Проверяем изменения в конфигах Minecraft
-  if git diff --name-only $BEFORE_COMMIT $AFTER_COMMIT | grep -qE "(survival|lobby|ai_research|velocity)/config/"; then
+  if git diff --name-only $BEFORE_COMMIT $AFTER_COMMIT | grep -qE "(survival|lobby|agents|velocity)/config/"; then
     echo -e "${YELLOW}Minecraft config changes detected${NC}"
-    RESTART_SERVICES="$RESTART_SERVICES survival lobby airesearch velocity"
+    RESTART_SERVICES="$RESTART_SERVICES survival lobby agents velocity"
   fi
 
   # Проверяем изменения в docker-compose.yml или postgres
@@ -201,7 +201,7 @@ echo "======================================${NC}"
 
 # Проверяем каждый перезапущенный сервис
 if [ "$RESTART_SERVICES" = "all" ]; then
-  CHECK_SERVICES="postgres velocity survival lobby airesearch backend frontend"
+  CHECK_SERVICES="postgres velocity survival lobby agents backend frontend"
 elif [ -n "$RESTART_SERVICES" ]; then
   CHECK_SERVICES="$RESTART_SERVICES"
 else

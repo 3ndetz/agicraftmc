@@ -90,7 +90,7 @@ backup_volume() {
 backup_volume "nettyanmc_velocity_data" "velocity"
 backup_volume "nettyanmc_survival_data" "survival"
 backup_volume "nettyanmc_lobby_data" "lobby"
-backup_volume "nettyanmc_airesearch_data" "airesearch"
+backup_volume "nettyanmc_agents_data" "agents"
 
 echo -e "${GREEN}✅ Minecraft worlds backup completed${NC}"
 
@@ -102,7 +102,7 @@ echo -e "${YELLOW}⚙️  Backing up configurations...${NC}"
 # Копировать конфиги из Git (они уже версионированы, но на всякий случай)
 cp -r ./lobby/config "$BACKUP_PATH/configs/lobby_config" 2>/dev/null || true
 cp -r ./survival/config "$BACKUP_PATH/configs/survival_config" 2>/dev/null || true
-cp -r ./ai_research/config "$BACKUP_PATH/configs/airesearch_config" 2>/dev/null || true
+cp -r ./agents/config "$BACKUP_PATH/configs/agents_config" 2>/dev/null || true
 cp -r ./velocity/config "$BACKUP_PATH/configs/velocity_config" 2>/dev/null || true
 cp -r ./backend/src "$BACKUP_PATH/configs/backend_src" 2>/dev/null || true
 cp -r ./frontend/src "$BACKUP_PATH/configs/frontend_src" 2>/dev/null || true

@@ -54,7 +54,7 @@ Crafty может управлять серверами, запущенными 
 3. Укажите путь к серверу:
    - Survival: `/var/lib/docker/volumes/nettyanmc_survival_data/_data`
    - Lobby: `/var/lib/docker/volumes/nettyanmc_lobby_data/_data`
-   - AI Research: `/var/lib/docker/volumes/nettyanmc_airesearch_data/_data`
+   - Agents: `/var/lib/docker/volumes/nettyanmc_agents_data/_data`
    - Velocity: `/var/lib/docker/volumes/nettyanmc_velocity_data/_data`
 
 ---

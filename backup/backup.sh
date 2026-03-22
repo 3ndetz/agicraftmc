@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Minecraft server backup script — airesearch
+# Minecraft server backup script — agents
 # Rotation policy:
 #   daily-YYYY-MM-DD.tar.gz   — created every day, kept last 2
 #   weekly-YYYY-MM-DD.tar.gz  — promoted every Monday, kept last 1
@@ -12,8 +12,8 @@ DATE=$(date +%Y-%m-%d)
 DOW=$(date +%u)   # 1=Monday ... 7=Sunday
 DOM=$(date +%d)   # 01-31
 
-DEST=/backups/airesearch
-SRC=/source        # mounted from ./ai_research/data
+DEST=/backups/agents
+SRC=/source        # mounted from ./agents/data
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 die() { log "ERROR: $*"; exit 1; }

@@ -26,8 +26,8 @@
 • console-survival.bat
   ➜ Консоль Survival сервера с возможностью ввода команд
 
-• console-airesearch.bat
-  ➜ Консоль AI Research сервера с возможностью ввода команд
+• console-agents.bat
+  ➜ Консоль Agents сервера с возможностью ввода команд
 
 Примеры команд:
   lobby> list              (список игроков)
@@ -56,7 +56,7 @@
 
 Minecraft:
   • Главный вход: localhost:25565
-  • AI Research (прямой): localhost:25570
+  • Agents (прямой): localhost:25576
 
 Веб-сайт:
   • http://localhost
@@ -104,7 +104,7 @@ Radmin VPN:
 Подключение к консоли любого сервера:
   docker attach minecraft_lobby
   docker attach minecraft_survival
-  docker attach minecraft_airesearch
+  docker attach minecraft_agents
 
 Отключение от консоли: Ctrl+P, Ctrl+Q (не останавливает сервер)
 

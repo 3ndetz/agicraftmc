@@ -30,7 +30,7 @@
 # Скачать и положить в:
 lobby/paper.jar
 survival/paper.jar
-ai_research/paper.jar
+agents/paper.jar
 ```
 
 **Velocity 3.4.0+:**
@@ -47,17 +47,17 @@ velocity/velocity.jar
 **Обязательные плагины для всех серверов:**
 
 1. **LuckPerms** (https://luckperms.net/download)
-   - `LuckPerms-Bukkit-5.5.17.jar` → `lobby/plugins/`, `survival/plugins/`, `ai_research/plugins/`
+   - `LuckPerms-Bukkit-5.5.17.jar` → `lobby/plugins/`, `survival/plugins/`, `agents/plugins/`
    - `LuckPerms-Velocity-5.5.17.jar` → `velocity/plugins/`
 
 2. **WorldGuard** (https://enginehub.org/worldguard)
-   - `worldguard-bukkit-7.0.14-dist.jar` → `lobby/plugins/`, `survival/plugins/`, `ai_research/plugins/`
+   - `worldguard-bukkit-7.0.14-dist.jar` → `lobby/plugins/`, `survival/plugins/`, `agents/plugins/`
 
 3. **WorldEdit** (https://enginehub.org/worldedit)
-   - `worldedit-bukkit-7.3.17.jar` → `lobby/plugins/`, `survival/plugins/`, `ai_research/plugins/`
+   - `worldedit-bukkit-7.3.17.jar` → `lobby/plugins/`, `survival/plugins/`, `agents/plugins/`
 
 4. **EssentialsX** (https://essentialsx.net/downloads.html)
-   - `EssentialsX-2.22.0.jar` → `lobby/plugins/`, `survival/plugins/`, `ai_research/plugins/`
+   - `EssentialsX-2.22.0.jar` → `lobby/plugins/`, `survival/plugins/`, `agents/plugins/`
    - `EssentialsXSpawn-2.22.0.jar` → `survival/plugins/`
 
 **Lobby сервер (дополнительно):**
@@ -182,7 +182,7 @@ docker-compose ps
 ```bash
 docker logs minecraft_lobby
 docker logs minecraft_survival
-docker logs minecraft_airesearch
+docker logs minecraft_agents
 docker logs minecraft_velocity
 ```
 
@@ -210,14 +210,14 @@ docker attach minecraft_velocity
 /lp creategroup legend
 
 # Создать AI группы
-/lp creategroup ai_research
+/lp creategroup agents
 /lp creategroup ai_person
 /lp creategroup netfather
 
 # Настроить bypass AuthMe для AI групп
-/lp group ai_research permission set authme.bypass.register true
-/lp group ai_research permission set authme.bypass.login true
-/lp group ai_person parent add ai_research
+/lp group agents permission set authme.bypass.register true
+/lp group agents permission set authme.bypass.login true
+/lp group ai_person parent add agents
 /lp group netfather permission set * true
 
 # См. полный список команд в LUCKPERMS_SETUP.md
@@ -247,7 +247,7 @@ setworldspawn 0 100 0
 /npc action add command /server survival
 
 /npc create AI_Research
-/npc action add command /server ai_research
+/npc action add command /server agents
 
 # См. подробную инструкцию в LOBBY_SETUP.md
 ```
@@ -272,7 +272,7 @@ docker attach minecraft_survival
 ### 5.4 AI Research сервер - настройка
 
 ```bash
-docker attach minecraft_airesearch
+docker attach minecraft_agents
 ```
 
 Команды:
@@ -352,7 +352,7 @@ npm run dev
 
 Minecraft:
 - `localhost:25565` - Velocity Proxy → Lobby
-- `localhost:25570` - AI Research (прямой доступ)
+- `localhost:25576` - Agents (прямой доступ)
 
 Веб-сайт:
 - `http://localhost` - Frontend
@@ -407,7 +407,7 @@ docker-compose ps
 ```bash
 docker logs -f minecraft_lobby
 docker logs -f minecraft_survival
-docker logs -f minecraft_airesearch
+docker logs -f minecraft_agents
 ```
 
 ---

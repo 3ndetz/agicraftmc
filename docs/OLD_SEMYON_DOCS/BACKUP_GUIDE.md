@@ -195,7 +195,7 @@ restore_volume() {
 restore_volume "nettyanmc_velocity_data" "velocity"
 restore_volume "nettyanmc_survival_data" "survival"
 restore_volume "nettyanmc_lobby_data" "lobby"
-restore_volume "nettyanmc_airesearch_data" "airesearch"
+restore_volume "nettyanmc_agents_data" "agents"
 
 # 5. Восстановить конфигурации (опционально, если были изменения)
 # cp -r /tmp/nettyanmc_backup_*/configs/* ./
@@ -425,7 +425,7 @@ openssl enc -aes-256-cbc -d \
 
 ```bash
 # 1. Остановить все сервисы использующие БД
-docker-compose stop velocity survival lobby airesearch backend
+docker-compose stop velocity survival lobby agents backend
 
 # 2. Восстановить БД из последнего бэкапа
 LATEST_BACKUP=$(ls -t ./backups/nettyanmc_backup_*.tar.gz | head -1)
@@ -517,7 +517,7 @@ docker exec minecraft_postgres psql -U mcserver -d minecraft_server -c "\dt"
 # Должны быть таблицы luckperms_*
 
 # Перезапустить все Minecraft серверы
-docker-compose restart velocity survival lobby airesearch
+docker-compose restart velocity survival lobby agents
 ```
 
 ---

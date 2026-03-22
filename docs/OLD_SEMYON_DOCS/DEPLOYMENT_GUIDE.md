@@ -37,7 +37,7 @@
 # Положить в:
 lobby/paper.jar
 survival/paper.jar
-ai_research/paper.jar
+agents/paper.jar
 ```
 
 **Velocity 3.4.0+:**
@@ -168,7 +168,7 @@ rg flag spawn_protection greeting "&aДобро пожаловать на Surviv
 
 ### AI Research
 
-**Адрес:** airesearch:25570 (прямой доступ)
+**Адрес:** agents:25576 (прямой доступ)
 **Роль:** Сервер для тестирования AI ботов
 
 **Настройка:**
@@ -178,7 +178,7 @@ rg flag spawn_protection greeting "&aДобро пожаловать на Surviv
 Основные шаги:
 1. Защита спавна (50x50 в Нижнем мире)
 2. End - полная анархия (без защиты)
-3. Права только для ai_research / ai_person
+3. Права только для agents / ai_person
 
 **Плагины:**
 - LuckPerms
@@ -303,7 +303,7 @@ default → new → helper → starter → vip → premium → elite → legend
 ```
 
 **Служебные группы:**
-- `ai_research` - доступ к AI Research серверу
+- `agents` - доступ к AI Research серверу
 - `ai_person` - AI боты (bypass авторизации)
 - `netfather` - владелец (все права)
 
@@ -316,20 +316,20 @@ docker attach minecraft_velocity
 # Создать группы
 /lp creategroup new
 /lp creategroup helper
-/lp creategroup ai_research
+/lp creategroup agents
 /lp creategroup ai_person
 
 # Установить веса
 /lp group new weight 10
 /lp group helper weight 20
-/lp group ai_research weight 5
+/lp group agents weight 5
 
 # Настроить права
 /lp group new permission set essentials.sethome.multiple.home1 true
 /lp group helper permission set essentials.fly true
 
 # ai_person автовход на AI Research
-/lp group ai_person meta set velocity.default-server ai_research
+/lp group ai_person meta set velocity.default-server agents
 ```
 
 ### PlayerPoints (AgiCoins)
@@ -556,10 +556,10 @@ docker-compose restart backend
 docker-compose logs backend | grep "Bot"
 
 # Проверить что AI Research сервер запущен
-docker-compose ps airesearch
+docker-compose ps agents
 
-# Проверить порт 25570
-telnet localhost 25570
+# Проверить порт 25576
+telnet localhost 25576
 ```
 
 ### Проблема: Ранг не выдался после оплаты
@@ -611,7 +611,7 @@ docker stats
 # Подключиться к консоли
 docker attach minecraft_lobby
 docker attach minecraft_survival
-docker attach minecraft_airesearch
+docker attach minecraft_agents
 docker attach minecraft_velocity
 
 # Отключиться (без остановки)
@@ -626,7 +626,7 @@ stop
 ```bash
 # Резервная копия миров
 docker cp minecraft_survival:/server/world ./backup/survival-world
-docker cp minecraft_airesearch:/server/world_ai ./backup/ai-world
+docker cp minecraft_agents:/server/world_ai ./backup/ai-world
 docker cp minecraft_lobby:/server/world ./backup/lobby-world
 
 # Резервная копия БД
@@ -645,7 +645,7 @@ cat backup/db.sql | docker exec -i minecraft_postgres psql -U mcserver minecraft
 | Velocity (Minecraft) | 25565 | Внешний |
 | Query (мониторинг) | 25566 | Внешний |
 | Lobby | 25569 | Внутренний |
-| AI Research | 25570 | Внешний (для ботов) |
+| Agents | 25576 | Внешний (для ботов) |
 | Survival | 25571 | Внутренний |
 | Survival+ (заглушка) | 25572 | Внутренний |
 | PostgreSQL | 5432 | Внутренний |

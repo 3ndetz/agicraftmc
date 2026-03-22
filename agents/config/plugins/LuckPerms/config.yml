@@ -1,4 +1,4 @@
-server: airesearch
+server: agents
 auto-install-translations: false
 include-global: true
 use-server-uuid-cache: true

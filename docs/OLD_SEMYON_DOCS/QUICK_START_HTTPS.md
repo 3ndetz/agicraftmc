@@ -113,7 +113,7 @@ RCON_PASSWORD=YourRconPass123!
 cd N:\Minecraftserver
 
 # Запустить всё кроме Caddy
-docker-compose up -d postgres velocity survival airesearch lobby backend frontend
+docker-compose up -d postgres velocity survival agents lobby backend frontend
 
 # Подождать 2 минуты пока всё запустится
 docker-compose ps

@@ -66,7 +66,7 @@ minecraft-project/
 │       ├── Multiverse-Core/
 │       ├── AuthMe/
 │       └── configs/
-├── ai_research/
+├── agents/
 │   ├── paper.jar
 │   ├── server.properties
 │   ├── eula.txt
@@ -109,7 +109,7 @@ force-key-authentication = false
 
 [servers]
 survival = "127.0.0.1:25565"
-ai_research = "127.0.0.1:25566"
+agents = "127.0.0.1:25566"
 
 try = ["survival"]
 
@@ -320,7 +320,7 @@ start "Survival" cmd /k "cd survival && java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+P
 timeout /t 30 /nobreak
 
 echo [2/3] Starting AI_Research server...
-start "AI_Research" cmd /k "cd ai_research && java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar nogui"
+start "AI_Research" cmd /k "cd agents && java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar nogui"
 
 timeout /t 30 /nobreak
 
@@ -347,8 +347,8 @@ cd ..
 sleep 30
 
 echo "[2/3] Starting AI_Research server..."
-cd ai_research
-screen -dmS ai_research java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar nogui
+cd agents
+screen -dmS agents java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar nogui
 cd ..
 
 sleep 30
@@ -360,7 +360,7 @@ cd ..
 
 echo
 echo "All servers started in screen sessions."
-echo "Use 'screen -r survival/ai_research/velocity' to attach."
+echo "Use 'screen -r survival/agents/velocity' to attach."
 ```
 
 ---
@@ -377,7 +377,7 @@ echo "Use 'screen -r survival/ai_research/velocity' to attach."
 ```bash
 # Paper 1.21.1: https://papermc.io/downloads/paper
 # Velocity: https://papermc.io/downloads/velocity
-# Положить в survival/, ai_research/, velocity/
+# Положить в survival/, agents/, velocity/
 ```
 
 **3. Копирование плагинов:**
@@ -392,7 +392,7 @@ echo "Use 'screen -r survival/ai_research/velocity' to attach."
 - Multiverse-Core-4.3.1.jar
 - AuthMe-5.6.0-beta2.jar
 
-# В ai_research/plugins/:
+# В agents/plugins/:
 - LuckPerms-Bukkit.jar
 - WorldGuard-7.0.9.jar
 - WorldEdit-7.3.0.jar
@@ -484,7 +484,7 @@ rg define test_polygon_1 1000 64 1000 1500 120 1500
 rg flag test_polygon_1 pvp deny
 rg flag test_polygon_1 block-break deny
 rg flag test_polygon_1 block-place deny
-rg addmember test_polygon_1 g:ai_research
+rg addmember test_polygon_1 g:agents
 
 setworldspawn 0 65 0
 ```
@@ -500,7 +500,7 @@ lp creategroup vip
 lp creategroup premium
 lp creategroup elite
 lp creategroup legend
-lp creategroup ai_research
+lp creategroup agents
 lp creategroup ai_person
 lp creategroup ai_father
 
@@ -512,20 +512,20 @@ lp group vip setweight 4
 lp group premium setweight 5
 lp group elite setweight 6
 lp group legend setweight 7
-lp group ai_research setweight 100
+lp group agents setweight 100
 lp group ai_person setweight 50
 lp group ai_father setweight 200
 
 # Права для AI групп
-lp group ai_research permission set velocity.command.server true
-lp group ai_research permission set essentials.tp true
-lp group ai_research permission set worldguard.region.bypass.* true
+lp group agents permission set velocity.command.server true
+lp group agents permission set essentials.tp true
+lp group agents permission set worldguard.region.bypass.* true
 
 lp group ai_person permission set authme.bypass.register true
 lp group ai_person permission set authme.bypass.login true
-lp group ai_person meta set velocity.default-server ai_research
+lp group ai_person meta set velocity.default-server agents
 
-lp group ai_father parent add ai_research
+lp group ai_father parent add agents
 lp group ai_father permission set * true
 
 # Права донатных групп (базовые примеры)
@@ -553,8 +553,8 @@ lp group legend permission set essentials.sethome.multiple.unlimited true
 4. Авторизация не требуется
 
 **Тест 3: Переключение серверов**
-1. Игрок с группой ai_research на Survival
-2. `/server ai_research` - телепорт на AI сервер
+1. Игрок с группой agents на Survival
+2. `/server agents` - телепорт на AI сервер
 3. Обычный игрок без прав - команда недоступна
 
 **Тест 4: Защищенные зоны**
@@ -592,7 +592,7 @@ lp group legend permission set essentials.sethome.multiple.unlimited true
 
 ## Группы
 - Донатные: new → helper → starter → vip → premium → elite → legend
-- Специальные: ai_research, ai_person, ai_father
+- Специальные: agents, ai_person, ai_father
 
 ## Поддержка
 Документация: DEPLOYMENT_GUIDE.md

@@ -101,7 +101,7 @@ survival:
 - ❌ `velocity/Dockerfile`
 - ❌ `survival/Dockerfile`
 - ❌ `lobby/Dockerfile`
-- ❌ `ai_research/Dockerfile`
+- ❌ `agents/Dockerfile`
 
 **Paper/Velocity JAR файлы** теперь загружаются автоматически при первом запуске контейнера.
 
@@ -140,7 +140,7 @@ docker-compose down
 ```bash
 docker rmi $(docker images | grep minecraft_survival | awk '{print $3}')
 docker rmi $(docker images | grep minecraft_lobby | awk '{print $3}')
-docker rmi $(docker images | grep minecraft_airesearch | awk '{print $3}')
+docker rmi $(docker images | grep minecraft_agents | awk '{print $3}')
 docker rmi $(docker images | grep minecraft_velocity | awk '{print $3}')
 ```
 
@@ -211,7 +211,7 @@ docker-compose exec survival ls -la /data/world
 git checkout HEAD~1 -- velocity/Dockerfile
 git checkout HEAD~1 -- survival/Dockerfile
 git checkout HEAD~1 -- lobby/Dockerfile
-git checkout HEAD~1 -- ai_research/Dockerfile
+git checkout HEAD~1 -- agents/Dockerfile
 ```
 
 ### 2. Обновить docker-compose.yml
