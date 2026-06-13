@@ -185,3 +185,7 @@ backups/
 *.tar.gz
 *.sql
 *.dump
+
+# secrets (untracked 2026-06-13 — leaked, see TOOLKIT)
+**/forwarding.secret
+**/floodgate/key.pem
