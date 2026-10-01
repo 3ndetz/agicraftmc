@@ -1,16 +1,23 @@
+x-logging: &bounded-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
 version: '3.8'
 
 services:
   ## UTILITY SECTION
 
-  # Web file manager — upload/download/manage JARs, worlds, configs remotely
-  # Access at http://<server-ip>:8090  (default login: admin / admin — change on first login!)
+  # Web file manager вЂ” upload/download/manage JARs, worlds, configs remotely
+  # Access at http://<server-ip>:8090  (default login: admin / admin вЂ” change on first login!)
   # filebrowser:
 
-  # Backup — daily tar.gz snapshots of agents data with rotation
+  # Backup вЂ” daily tar.gz snapshots of agents data with rotation
   # Logs: docker logs mc_backup
   # Manual run: docker exec mc_backup /usr/local/bin/backup.sh
   mc-backup:
+    logging: *bounded-logging
     build: ./backup
     container_name: mc_backup
     restart: unless-stopped
@@ -29,9 +36,12 @@ services:
       postgres:
         condition: service_healthy
 
-  # Web file manager — upload/download/manage JARs, worlds, configs remotely
+  # Web file manager вЂ” upload/download/manage JARs, worlds, configs remotely
   # Access at files.agicraft.ru  (credentials via FB_USERNAME / FB_PASSWORD in .env)
   filebrowser:
+    logging: *bounded-logging
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8080/health"]
     image: filebrowser/filebrowser:latest
     container_name: mc_filebrowser
     restart: unless-stopped
@@ -53,6 +63,7 @@ services:
 
   ## MANDATORY POSTGRES DATABASE FOR SERVERS
   postgres:
+    logging: *bounded-logging
     image: postgres:16-alpine
     container_name: minecraft_postgres
     restart: unless-stopped
@@ -76,6 +87,7 @@ services:
   ## SERVER PROXY SECTION
   ## CONNECTION BETWEEN SERVERS
   velocity:
+    logging: *bounded-logging
     build: ./velocity
     container_name: minecraft_velocity
     restart: unless-stopped
@@ -95,6 +107,7 @@ services:
 
 ## MAIN TARGET SERVER FOR NOW
   agents:
+    logging: *bounded-logging
     image: itzg/minecraft-server
     container_name: minecraft_agents
     restart: unless-stopped
@@ -149,6 +162,7 @@ services:
     tty: true
 
   private:
+    logging: *bounded-logging
     image: itzg/minecraft-server
     container_name: minecraft_private
     restart: unless-stopped
@@ -204,6 +218,7 @@ services:
 ## TO RUN THEM, START CONTAINERS MANUALLY
 
   lobby:
+    logging: *bounded-logging
     image: itzg/minecraft-server
     container_name: minecraft_lobby
     restart: unless-stopped
@@ -234,6 +249,7 @@ services:
     profiles: ["debug"]
 
   survivalplus:
+    logging: *bounded-logging
     image: itzg/minecraft-server
     container_name: minecraft_survivalplus
     restart: unless-stopped
@@ -265,6 +281,7 @@ services:
 
 
   limbo:
+    logging: *bounded-logging
     build: ./limbo
     container_name: minecraft_limbo
     restart: unless-stopped
@@ -287,6 +304,7 @@ services:
           memory: 100M
     profiles: ["debug"]
   survival:
+    logging: *bounded-logging
     image: itzg/minecraft-server
     container_name: minecraft_survival
     restart: unless-stopped
@@ -319,6 +337,7 @@ services:
 ## WEBPACK SECTION
 
   agicraft_backend:
+    logging: *bounded-logging
     build: ./agicraft_backend
     container_name: agicraft_backend
     restart: unless-stopped
@@ -357,6 +376,7 @@ services:
       start_period: 40s
 
   agicraft_frontend:
+    logging: *bounded-logging
     build: ./agicraft_frontend
     container_name: agicraft_frontend
     restart: unless-stopped
@@ -371,20 +391,21 @@ services:
     environment:
       VITE_API_URL: ${VITE_API_URL:-/api}
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
 
-  # CRAFTY CONTROLLER - Web UI для управления серверами
+  # CRAFTY CONTROLLER - Web UI РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРµСЂРІРµСЂР°РјРё
   # https://hub.docker.com/r/arcadiatechnology/crafty-4
   # https://wiki.craftycontrol.com/en/4/Docker%20Setup%20Documentation
-  # отключил из-за проблем с windows в crafty docker, говорят юзать portable
+  # РѕС‚РєР»СЋС‡РёР» РёР·-Р·Р° РїСЂРѕР±Р»РµРј СЃ windows РІ crafty docker, РіРѕРІРѕСЂСЏС‚ СЋР·Р°С‚СЊ portable
 
   ## CONTROL PANELS SECTION
   ## ADMIN PANELS AND MONITORING
   rcon-panel:
+    logging: *bounded-logging
     image: itzg/rcon
     container_name: rcon_web_admin
     restart: unless-stopped
@@ -400,12 +421,12 @@ services:
       RWA_RCON_PORT: 25586
       # needs to match the password configured for the container, see RCON_PASSWORD below
       RWA_RCON_PASSWORD: ${RCON_PASSWORD:-StrongPass123!}
-      # Указываем, что будем управлять несколькими серверами через JSON конфиг
+      # РЈРєР°Р·С‹РІР°РµРј, С‡С‚Рѕ Р±СѓРґРµРј СѓРїСЂР°РІР»СЏС‚СЊ РЅРµСЃРєРѕР»СЊРєРёРјРё СЃРµСЂРІРµСЂР°РјРё С‡РµСЂРµР· JSON РєРѕРЅС„РёРі
       RCON_MULTIPLE_SERVERS: "true"
       # RWA_ENV_CONFIG: "false" 
     volumes:
-        # нельзя монтировать на /
-    #   # Монтируем файл server.json с настройками серверов
+        # РЅРµР»СЊР·СЏ РјРѕРЅС‚РёСЂРѕРІР°С‚СЊ РЅР° /
+    #   # РњРѕРЅС‚РёСЂСѓРµРј С„Р°Р№Р» server.json СЃ РЅР°СЃС‚СЂРѕР№РєР°РјРё СЃРµСЂРІРµСЂРѕРІ
       - rcon_panel_data:/opt/rcon-web-admin/db
     networks:
       - mc
@@ -416,6 +437,7 @@ services:
 
   # Control MC docker images
   portainer:
+      logging: *bounded-logging
       image: portainer/portainer-ce:latest
       container_name: portainer
       restart: unless-stopped
@@ -424,10 +446,10 @@ services:
       expose:
         - "9000"
       environment:
-        # Задаем часовой пояс переменной, так как монтировать /etc/localtime на Windows нельзя
-        - TZ=Europe/Moscow  # Поменяйте на свой, если нужно
+        # Р—Р°РґР°РµРј С‡Р°СЃРѕРІРѕР№ РїРѕСЏСЃ РїРµСЂРµРјРµРЅРЅРѕР№, С‚Р°Рє РєР°Рє РјРѕРЅС‚РёСЂРѕРІР°С‚СЊ /etc/localtime РЅР° Windows РЅРµР»СЊР·СЏ
+        - TZ=Europe/Moscow  # РџРѕРјРµРЅСЏР№С‚Рµ РЅР° СЃРІРѕР№, РµСЃР»Рё РЅСѓР¶РЅРѕ
       volumes:
-        # На Docker Desktop for Windows это работает, так как он транслирует Windows Pipe в Linux Socket
+        # РќР° Docker Desktop for Windows СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚, С‚Р°Рє РєР°Рє РѕРЅ С‚СЂР°РЅСЃР»РёСЂСѓРµС‚ Windows Pipe РІ Linux Socket
         - /var/run/docker.sock:/var/run/docker.sock
         - portainer_data:/data
       networks:
@@ -436,6 +458,7 @@ services:
 
   # One-shot init: sets portainer admin credentials on first run only (ignored if admin already exists)
   portainer-init:
+      logging: *bounded-logging
       image: curlimages/curl:latest
       container_name: portainer_init
       restart: on-failure
