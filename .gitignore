@@ -1,5 +1,7 @@
 # ==========================================
 # MINECRAFT SERVER DATA (use Docker volumes)
+__pycache__/
+*.pyc
 # ==========================================
 # Exclude runtime server directories, keep only config/ for version control
 survival/*
