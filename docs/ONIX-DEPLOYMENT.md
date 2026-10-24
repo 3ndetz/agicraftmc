@@ -1,8 +1,33 @@
 # Minecraft на ONIXPC
 
 Целевая схема использует прежние Paper, Velocity и PostgreSQL в Docker Compose.
-Миры и конфигурация находятся на `M:\Services\agicraftmc`, операционные файлы —
-в `M:\Services\agicraft-onix-ops`. Файлы с секретами не входят в Git.
+Миры и конфигурация находятся в ext4 внутри динамического диска
+`M:\Services\agicraft-data-20261025.vhdx`. Его предел — 2 ТиБ; физический файл
+растёт по мере записи. Операционные файлы находятся в
+`M:\Services\agicraft-onix-ops`, служебные маркеры Windows — в
+`M:\Services\agicraftmc`. Файлы с секретами не входят в Git.
+
+WSL монтирует диск в `/mnt/wsl/agicraft-data`. Данные проекта доступны в
+`/mnt/wsl/agicraft-data/agicraftmc`; Docker Desktop видит их через
+`/run/desktop/mnt/host/wsl/agicraft-data/agicraftmc`. Файловая система Linux
+сохраняет исходные UID, GID, режимы доступа, регистр имён и наносекундные метки.
+
+Перед запуском проверяется UUID смонтированной файловой системы и внутренний
+маркер завершённого развёртывания. Все рабочие bind-mount используют
+`create_host_path: false`: отсутствие диска завершает запуск ошибкой, вместо
+создания пустых каталогов для новых миров. Просмотр файлов через WSL:
+
+```powershell
+wsl -d Ubuntu-24.04 -u root -- ls -la /mnt/wsl/agicraft-data/agicraftmc
+```
+
+## Образы
+
+Перенос со старого хранилища Docker в containerd требует регистрации каждого
+образа с отдельной ссылкой. Сохраняются исходные конфигурационные blob и слои;
+меняются только оболочка OCI и локальные теги. Перед запуском сравниваются
+diff-ID всех слоёв и параметры конфигурации. Локальные ссылки
+`agicraft-onix-source/<service>:20261024` используются с `pull_policy: never`.
 
 ## Сетевой вход
 
