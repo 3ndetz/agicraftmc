@@ -18,6 +18,8 @@ services:
   # Manual run: docker exec mc_backup /usr/local/bin/backup.sh
   mc-backup:
     logging: *bounded-logging
+    mem_limit: 512m
+    memswap_limit: 512m
     build: ./backup
     container_name: mc_backup
     restart: unless-stopped
